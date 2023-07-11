@@ -1,4 +1,5 @@
 .grid__item {
+  height: 100%;
   border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
