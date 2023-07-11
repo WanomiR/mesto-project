@@ -1,0 +1,8 @@
+.grid__item-info {
+  min-height: 80px;
+  margin: 0 20px 0 21px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
