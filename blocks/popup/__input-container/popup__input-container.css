@@ -3,3 +3,9 @@
   padding: 0;
   border: 0;
 }
+
+@media screen and (max-width: 525px) {
+  .popup__input-container {
+    margin: 72px 22px 25px;
+  }
+}
