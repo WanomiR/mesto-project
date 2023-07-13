@@ -2,3 +2,10 @@
   display: flex;
   align-items: center;
 }
+
+@media screen and (max-width: 525px) {
+  .profile__profile-info {
+    flex-direction: column;
+    align-items: center;
+  }
+}

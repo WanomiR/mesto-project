@@ -2,5 +2,12 @@
   margin: 50px 0 66px;
   display: grid;
   grid-template: repeat(2, fit-content(362px)) / repeat(3, 1fr);
+  grid-auto-flow: row;
   gap: 20px 17px;
+}
+
+@media screen and (max-width: 525px) {
+  .grid {
+    margin-top: 36px;
+  }
 }

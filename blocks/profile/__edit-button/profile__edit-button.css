@@ -6,9 +6,17 @@
   background-repeat: no-repeat;
   background-position: center;
   border: 1px #fff solid;
+  box-sizing: border-box;
 }
 
 .profile__edit-button:hover {
   opacity: 0.6;
   transition: opacity 0.3s ease;
+}
+
+@media screen and (max-width: 610px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+  }  
 }

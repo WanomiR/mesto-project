@@ -4,10 +4,26 @@
   background-image: url(../../../images/add.svg);
   background-repeat: no-repeat;
   background-position: center;
+  background-size: initial;
   border: 2px #fff solid;
+
 }
 
 .profile__add-button:hover {
   opacity: 0.6;
   transition: opacity 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+ .profile__add-button {
+  margin-top: 36px;
+  width: calc(100vw - 100px);
+ } 
+}
+
+@media screen and (max-width: 425px) {
+  .profile__add-button {
+    margin-top: 32px;
+    width: calc(100vw - 38px);
+  }
 }
