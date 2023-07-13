@@ -6,7 +6,6 @@
   background-position: center;
   background-size: initial;
   border: 2px #fff solid;
-
 }
 
 .profile__add-button:hover {
@@ -15,15 +14,15 @@
 }
 
 @media screen and (max-width: 768px) {
- .profile__add-button {
+  .profile__add-button {
   margin-top: 36px;
-  width: calc(100vw - 100px);
- } 
+  width: 320px;
+  } 
 }
 
 @media screen and (max-width: 425px) {
   .profile__add-button {
     margin-top: 32px;
-    width: calc(100vw - 38px);
+    width: min(320px, calc(100vw - 38px));
   }
 }

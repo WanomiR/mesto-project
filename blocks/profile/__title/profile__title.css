@@ -9,13 +9,20 @@
 
 @media screen and (max-width: 610px) {
   .profile__title {
-    font-size: 27px;
-    line-height: 31px;
+    font-size: 32px;
+    line-height: 36px;
   }
 }
 
 @media screen and (max-width: 525px) {
   .profile__title {
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile__title {
+    font-size: 27px;
+    line-height: 31px;
   }
 }
