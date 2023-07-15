@@ -11,7 +11,6 @@
       <img class="header__logo" src="./images/mesto-logo.svg" alt="логотип проекта Mesto">
     </header>
     <main class="content">
-      </section>
       <section class="profile">
         <div class="profile__profile-info">
           <img class="profile__avatar" src="./images/jacque.jpg" alt="фотография пользователя">
@@ -73,16 +72,16 @@
     <footer class="footer">
       <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
-      <form class="popup__container">
+    <div class="popup popup_opened">
+      <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <fieldset class="popup__input-container">
-          <input type="text" name="name" placeholder="Имя" class="popup__item popup__item_el_name">
-          <input type="text" name="description" placeholder="Род деятельности" class="popup__item popup__item_el_description">
+        <form class="popup__form" name="userInfo">
+          <input type="text" name="name" placeholder="Имя" class="popup__item">
+          <input type="text" name="description" placeholder="Род деятельности" class="popup__item">
           <button type="submit" class="popup__submit-button">Сохранить</button>
-        </fieldset>
-        <div class="popup__close-button"></div>
-      </form>
+        </form>
+        <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
+      </div>
     </div>
   </body>
 </html>
