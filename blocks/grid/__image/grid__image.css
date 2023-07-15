@@ -1,7 +1,6 @@
 .grid__image {
   width: 100%;
-  height: calc(100% - 80px);
+  display: block;
   object-fit: cover;
   object-position: center;
-  filter: brightness(.8);
 }
