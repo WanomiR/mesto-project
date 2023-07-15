@@ -1,11 +1,9 @@
 .profile {
   max-width: 880px;
   display: grid;
-  grid-template-rows: 7fr 5fr;
-  grid-template-columns: 120px fit-content(450px) 24px auto;
-  grid-template-areas: 
-  "profile-pic title edit-button add-button"
-  "profile-pic subtitle subtitle add-button";
+  grid-template:
+  "profile-pic title edit-button add-button" 7fr
+  "profile-pic subtitle subtitle add-button" 5fr / 120px fit-content(450px) 24px auto;
   align-items: center;
 }
 
