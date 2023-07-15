@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mesto</title>
+    <title lang="en">Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
   </head>
   <body class="page">
@@ -88,7 +88,7 @@
     <footer class="footer">
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
-    <section class="popup popup_opened">
+    <div class="popup">
       <form class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
@@ -96,8 +96,8 @@
           <input type="text" name="description" placeholder="Род деятельности" class="popup__item popup__item_el_description">
           <button type="submit" class="popup__submit-button">Сохранить</button>
         </fieldset>
-        <div class="popup__close-button">
+        <div class="popup__close-button"></div>
       </form>
-    </section>
+    </div>
   </body>
 </html>
