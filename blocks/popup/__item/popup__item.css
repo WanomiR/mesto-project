@@ -1,6 +1,6 @@
 .popup__item {
   margin: 0;
-  padding: 0 0 9px;
+  padding: 0 0 10px;
   border: 0;
   width: 100%;
   box-sizing: border-box;
@@ -16,5 +16,5 @@
 }
 
 .popup__item:nth-of-type(2n) {
-  margin-bottom: 48px;
+  margin-bottom: 45px;
 }
