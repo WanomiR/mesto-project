@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 949px) {
   .profile {
     grid-template: 
     "profile-pic title edit-button" 7fr

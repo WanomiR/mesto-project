@@ -19,7 +19,7 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 949px) {
   .profile__add-button {
     justify-self: center;
     align-self: flex-end;
