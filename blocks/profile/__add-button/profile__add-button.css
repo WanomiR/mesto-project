@@ -11,6 +11,8 @@
   border-radius: 2px;
   transition: opacity 0.3s ease;
   cursor: pointer;
+  grid-area: add-button;
+  justify-self: flex-end;
 }
 
 .profile__add-button:hover {

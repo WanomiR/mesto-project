@@ -1,14 +1,15 @@
 .profile__subtitle {
   color: #fff;
-  margin: 0;
+  margin: 8px 0 0 30px;
   padding: 0;
   font-size: 18px;
   line-height: 22px;
   font-weight: 400;
-  max-width: 400px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  grid-area: subtitle;
+  align-self: flex-start;
 }
 
 @media screen and (max-width: 525px) {
