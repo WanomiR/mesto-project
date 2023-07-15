@@ -20,9 +20,10 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 650px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    justify-self: flex-start;
   }  
 }

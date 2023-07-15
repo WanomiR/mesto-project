@@ -5,9 +5,9 @@
   font-weight: 400;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 650px) {
   .footer__copyright {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 17px;
   }
 }

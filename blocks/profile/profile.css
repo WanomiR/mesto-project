@@ -1,5 +1,5 @@
 .profile {
-  max-width: 880px;
+  width: 100%;
   display: grid;
   grid-template:
   "profile-pic title edit-button add-button" 7fr
@@ -7,14 +7,23 @@
   align-items: center;
 }
 
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 980px) {
   .profile {
-    flex-direction: column;
+    grid-template: 
+    "profile-pic title edit-button" 7fr
+    "profile-pic subtitle subtitle" 5fr
+    "add-button add-button add-button" 80px / auto fit-content(450px) auto;
   }
 }
 
-@media screen and (max-width: 525px) {
-  .profile {
-    margin-bottom: 36px;
+@media screen and (max-width: 650px) {
+  .profile{
+    grid-template:
+    "profile-pic profile-pic" auto
+    "title edit-button" 7fr
+    "subtitle subtitle" 5fr
+    "add-button add-button" 62px / fit-content(450px) auto;
+    justify-content: center;
+    justify-items: center;
   }
-} */
+}

@@ -12,22 +12,13 @@
   align-self: flex-end;
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 650px) {
   .profile__title {
-    font-size: 32px;
-    line-height: 36px;
-  }
-}
-
-@media screen and (max-width: 525px) {
-  .profile__title {
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 425px) {
-  .profile__title {
+    max-width: 254px;
+    margin: 28px 10px 0 28px;
     font-size: 27px;
     line-height: 33px;
+    text-align: center;
+    justify-self: flex-end;
   }
 }

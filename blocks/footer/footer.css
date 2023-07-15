@@ -1,15 +1,9 @@
 .footer {
-  max-width: min(880px, calc(100vw - 100px));
+  max-width: min(880px, calc(100vw - 70px));
   margin: 66px auto 60px;
 }
 
-@media screen and (max-width: 768px) {
-  .footer {
-    max-width: calc(100vw - 74px);
-  }
-}
-
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 650px) {
   .footer {
     margin: 48px auto 36px;
     max-width: calc(100vw - 38px);

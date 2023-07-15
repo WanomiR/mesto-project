@@ -6,10 +6,11 @@
   object-position: center;
   display: block;
   grid-area: profile-pic;
+  justify-self: flex-end;
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 650px) {
   .profile__avatar {
-    margin: 0 0 26px;
+    justify-self: center;
   }
 }

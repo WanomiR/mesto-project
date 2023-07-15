@@ -1,5 +1,5 @@
 .header {
-  max-width: min(880px, calc(100vw - 100px));
+  max-width: min(880px, calc(100vw - 70px));
   margin: 45px auto 40px;
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
@@ -7,16 +7,10 @@
   opacity: .88;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 650px) {
   .header {
-    max-width: calc(100% - 74px);
-  }
-}
-
-@media screen and (max-width: 525px) {
-  .header {
-    margin: 28px 0 28px;
+    margin: 28px 0 42px;
     max-width: 100%;
-    padding-bottom: 28px;
+    padding-bottom: 30px;
   }
 }
