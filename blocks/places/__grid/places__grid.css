@@ -1,13 +1,9 @@
-.grid {
-  margin: 50px 0 66px;
+.places__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, 282px);
   justify-content: center;
   gap: 20px 17px;
-}
-
-@media screen and (max-width: 650px) {
-  .grid {
-    margin: 36px 0 48px;
-  }
 }

@@ -1,4 +1,4 @@
-.grid__like-button {
+.card__like-button {
   width: 22px;
   height: 19px;
   padding: 0;
@@ -12,6 +12,6 @@
   cursor: pointer;
 }
 
-.grid__like-button:hover {
+.card__like-button:hover {
   opacity: 0.5;
 }

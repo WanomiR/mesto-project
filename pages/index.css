@@ -13,13 +13,14 @@
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 
-@import url(../blocks/grid/grid.css);
-@import url(../blocks/grid/__item/grid__item.css);
-@import url(../blocks/grid/__image/grid__image.css);
-@import url(../blocks/grid/__item-info/grid__item-info.css);
-@import url(../blocks/grid/__item-title/grid__item-title.css);
-@import url(../blocks/grid/__like-button/grid__like-button.css);
-@import url(../blocks/grid/__like-button/_active/grid__like-button_active.css);
+@import url(../blocks/places/places.css);
+@import url(../blocks/places/__grid/places__grid.css);
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__image/card__image.css);
+@import url(../blocks/card/__info/card__info.css);
+@import url(../blocks/card/__title/card__title.css);
+@import url(../blocks/card/__like-button/card__like-button.css);
+@import url(../blocks/card/__like-button/_active/card__like-button_active.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
