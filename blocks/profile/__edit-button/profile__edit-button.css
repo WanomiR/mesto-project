@@ -25,5 +25,6 @@
     width: 18px;
     height: 18px;
     justify-self: flex-start;
+    background-size: 7.5px 7.5px;
   }  
 }
