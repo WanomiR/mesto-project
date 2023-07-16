@@ -4,7 +4,6 @@
   padding-bottom: 40px;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
   box-sizing: border-box;
-  opacity: .88;
 }
 
 @media screen and (max-width: 650px) {
