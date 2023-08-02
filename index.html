@@ -26,15 +26,26 @@
     <footer class="footer">
       <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_profile">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="userInfo">
-          <input type="text" name="name" placeholder="Имя" class="popup__item popup__item_el_name">
-          <input type="text" name="description" placeholder="Род деятельности" class="popup__item popup__item_el_description">
+        <form class="popup__form popup__form_type_profile" name="userInfo">
+          <input type="text" name="name" placeholder="Имя" value="Жак-Ив Кусто" class="popup__item popup__item_el_name">
+          <input type="text" name="description" placeholder="Род деятельности" value="Исследователь океана" class="popup__item popup__item_el_description">
           <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
-        <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
+        <button class="popup__close-button popup__close-button_type_profile" type="button" aria-label="закрыть модальное окно"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_card">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form popup__form_type_card" name="userInfo">
+          <input type="text" name="place-name" placeholder="Название места" class="popup__item popup__item_el_place">
+          <input type="text" name="image-link" placeholder="Ссылка на изображение" class="popup__item popup__item_el_link">
+          <button type="submit" class="popup__submit-button">Создать</button>
+        </form>
+        <button class="popup__close-button popup__close-button_type_card" type="button" aria-label="закрыть модальное окно"></button>
       </div>
     </div>
     <template class="card__template">
