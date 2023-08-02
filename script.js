@@ -17,7 +17,7 @@ profileEditCloseButton.addEventListener("click", () => {
 
 const popupCard = document.querySelector(".popup_type_card");
 const addCardButton = document.querySelector(".profile__add-button");
-const addCardCloseButton = document.querySelector(".popup__close-button_type_card");
+const addCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
 
 // open add-card popup
 addCardButton.addEventListener("click", () => {
@@ -97,6 +97,11 @@ function addCard(placeName, imageLink) {
     deleteButton.closest(".card").remove();
   });
 
+  // open preview
+  card.querySelector(".card__image").addEventListener("click", (evt) => {
+    evt.target.classList.add("card__image_preview");
+  });
+
   cardsContainer.prepend(card);
 }
 
@@ -135,10 +140,4 @@ initialCards.forEach(item => {
 
 
 
-
-
-
-
-
-
-
+// -------- Image preview ------ // 
