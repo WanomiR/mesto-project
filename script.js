@@ -3,7 +3,7 @@
 // profile
 const popupProfile = document.querySelector(".popup_type_profile");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const profileEditCloseButton = document.querySelector(".popup__close-button_type_profile");
+const profileCloseButton = document.querySelector(".popup__close-button_type_profile");
 
 // open edit profile
 profileEditButton.addEventListener("click", () => {
@@ -11,22 +11,22 @@ profileEditButton.addEventListener("click", () => {
 });
 
 // close edit profile
-profileEditCloseButton.addEventListener("click", () => {
+profileCloseButton.addEventListener("click", () => {
   popupProfile.classList.remove("popup_opened");
 });
 
 // add-card
 const popupCard = document.querySelector(".popup_type_card");
-const addCardButton = document.querySelector(".profile__add-button");
-const addCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
+const popupCardAddButton = document.querySelector(".profile__add-button");
+const popupCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
 
 // open add-card
-addCardButton.addEventListener("click", () => {
+popupCardAddButton.addEventListener("click", () => {
   popupCard.classList.add("popup_opened")
 });
 
 // close add-card
-addCardCloseButton.addEventListener("click", () => {
+popupCardCloseButton.addEventListener("click", () => {
   popupCard.classList.remove("popup_opened");
 });
 
@@ -62,12 +62,15 @@ const imageLink = document.querySelector(".popup__item_el_link");
 
 function cardFormSubmitHandler(evt) {
   evt.preventDefault();
+  // add card only if both inputs are filled
   if (!!placeName.value && !!imageLink.value) {
     addCard(placeName.value, imageLink.value);
     popupCard.classList.remove("popup_opened");
+    // remove input values after adding the card
     placeName.value = "";
     imageLink.value = "";
   } else {
+    // alert in case some of the inputs wasn't filled
     alert("Чтобы добавить карточку, укажите название места и ссылку на изображение.");
   }
 }
