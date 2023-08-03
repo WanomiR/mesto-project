@@ -1,6 +1,7 @@
 // ----------------------------- // 
 // -------- Popups ------------- // 
 
+// profile
 const popupProfile = document.querySelector(".popup_type_profile");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditCloseButton = document.querySelector(".popup__close-button_type_profile");
@@ -15,6 +16,7 @@ profileEditCloseButton.addEventListener("click", () => {
   popupProfile.classList.remove("popup_opened");
 });
 
+// add-card
 const popupCard = document.querySelector(".popup_type_card");
 const addCardButton = document.querySelector(".profile__add-button");
 const addCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
@@ -80,26 +82,37 @@ const cardsContainer = document.querySelector(".places__grid");
 
 // add card
 function addCard(placeName, imageLink) {
+
   const cardTemplate = document.querySelector(".card__template").content;
   const card = cardTemplate.querySelector(".card").cloneNode(true);
   
   card.querySelector(".card__title").textContent = placeName;
   card.querySelector(".card__image").src = imageLink;
+  card.querySelector(".image-popup__image-title").textContent = placeName;
+  card.querySelector(".image-popup__image").src = imageLink;
   
-  // like button
+  // like
   card.querySelector(".card__like-button").addEventListener("click", (evt) => {
     evt.target.classList.toggle("card__like-button_active");
   });
 
-  // delete button
+  // delete
   const deleteButton = card.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
     deleteButton.closest(".card").remove();
   });
 
   // open preview
-  card.querySelector(".card__image").addEventListener("click", (evt) => {
-    evt.target.classList.add("card__image_preview");
+  const cardImage = card.querySelector(".card__image");
+  cardImage.addEventListener("click", () => {
+    const imagePopup = cardImage.closest(".card").querySelector(".image-popup")
+    imagePopup.classList.add("image-popup_opened");
+  });
+
+  // close preview
+  const imagePopupCloseButton = card.querySelector(".image-popup__close-button");
+  imagePopupCloseButton.addEventListener("click", () => {
+    imagePopupCloseButton.closest(".image-popup").classList.remove("image-popup_opened");
   });
 
   cardsContainer.prepend(card);
@@ -138,6 +151,3 @@ initialCards.forEach(item => {
   addCard(item.name, item.link);
 });
 
-
-
-// -------- Image preview ------ // 
