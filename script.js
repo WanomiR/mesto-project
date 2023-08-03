@@ -88,7 +88,7 @@ function addCard(placeName, imageLink) {
   
   card.querySelector(".card__title").textContent = placeName;
   card.querySelector(".card__image").src = imageLink;
-  card.querySelector(".image-popup__image-title").textContent = placeName;
+  card.querySelector(".image-popup__title").textContent = placeName;
   card.querySelector(".image-popup__image").src = imageLink;
   
   // like
@@ -150,4 +150,3 @@ const initialCards = [
 initialCards.forEach(item => {
   addCard(item.name, item.link);
 });
-
