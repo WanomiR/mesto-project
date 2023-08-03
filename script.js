@@ -1,17 +1,16 @@
-// ----------------------------- // 
-// -------- Popups ------------- // 
+// ----------- Popups ------------- // 
 
 // profile
 const popupProfile = document.querySelector(".popup_type_profile");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditCloseButton = document.querySelector(".popup__close-button_type_profile");
 
-// open edit profile popup
+// open edit profile
 profileEditButton.addEventListener("click", () => {
   popupProfile.classList.add("popup_opened");
 });
 
-// close edit profile popup
+// close edit profile
 profileEditCloseButton.addEventListener("click", () => {
   popupProfile.classList.remove("popup_opened");
 });
@@ -21,18 +20,20 @@ const popupCard = document.querySelector(".popup_type_card");
 const addCardButton = document.querySelector(".profile__add-button");
 const addCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
 
-// open add-card popup
+// open add-card
 addCardButton.addEventListener("click", () => {
   popupCard.classList.add("popup_opened")
 });
 
-// close add-card popup
+// close add-card
 addCardCloseButton.addEventListener("click", () => {
   popupCard.classList.remove("popup_opened");
 });
 
-// ----- Form: profile ---------- // 
 
+// ------------- Forms ------------- // 
+
+// profile
 const profileFormElement = document.querySelector(".popup__form_type_profile");
 const nameInput = document.querySelector(".popup__item_el_name");
 const jobInput = document.querySelector(".popup__item_el_description");
@@ -40,7 +41,6 @@ const jobInput = document.querySelector(".popup__item_el_description");
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 
-// submit handler
 function profileFormSubmitHandler(evt) {
   evt.preventDefault();
   
@@ -52,8 +52,7 @@ function profileFormSubmitHandler(evt) {
 
 profileFormElement.addEventListener("submit", profileFormSubmitHandler);
 
-// ------- Form: cards ---------- // 
-
+// add-card
 const cardFormElement = document.querySelector(".popup__form_type_card");
 const placeNameInput = document.querySelector(".popup__item_el_place");
 const imageLinkInput = document.querySelector(".popup__item_el_link");
@@ -69,7 +68,7 @@ function cardFormSubmitHandler(evt) {
     placeName.value = "";
     imageLink.value = "";
   } else {
-    alert("Чтобы добавить карточку укажите название места и ссылку на изображение.");
+    alert("Чтобы добавить карточку, укажите название места и ссылку на изображение.");
   }
 }
 
@@ -80,7 +79,7 @@ cardFormElement.addEventListener("submit", cardFormSubmitHandler);
 
 const cardsContainer = document.querySelector(".places__grid");
 
-// add card
+// function for adding a new card
 function addCard(placeName, imageLink) {
 
   const cardTemplate = document.querySelector(".card__template").content;
@@ -91,25 +90,25 @@ function addCard(placeName, imageLink) {
   card.querySelector(".image-popup__title").textContent = placeName;
   card.querySelector(".image-popup__image").src = imageLink;
   
-  // like
+  // like button
   card.querySelector(".card__like-button").addEventListener("click", (evt) => {
     evt.target.classList.toggle("card__like-button_active");
   });
 
-  // delete
+  // delete button
   const deleteButton = card.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
     deleteButton.closest(".card").remove();
   });
 
-  // open preview
+  // open preview by clicking on image
   const cardImage = card.querySelector(".card__image");
   cardImage.addEventListener("click", () => {
     const imagePopup = cardImage.closest(".card").querySelector(".image-popup")
     imagePopup.classList.add("image-popup_opened");
   });
 
-  // close preview
+  // close preview button
   const imagePopupCloseButton = card.querySelector(".image-popup__close-button");
   imagePopupCloseButton.addEventListener("click", () => {
     imagePopupCloseButton.closest(".image-popup").classList.remove("image-popup_opened");
