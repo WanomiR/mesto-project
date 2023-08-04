@@ -30,8 +30,8 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form popup__form_type_profile" name="userInfo">
-          <input type="text" name="name" placeholder="Имя" value="Жак-Ив Кусто" class="popup__item popup__item_el_name">
-          <input type="text" name="description" placeholder="Род деятельности" value="Исследователь океана" class="popup__item popup__item_el_description">
+          <input type="text" name="name" placeholder="Имя" value="Жак-Ив Кусто" class="popup__item popup__item_el_name" required>
+          <input type="text" name="description" placeholder="Род деятельности" value="Исследователь океана" class="popup__item popup__item_el_description" required>
           <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
         <button class="popup__close-button popup__close-button_type_profile" type="button" aria-label="закрыть модальное окно"></button>
@@ -41,11 +41,18 @@
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__form popup__form_type_card" name="userInfo">
-          <input type="text" name="place-name" placeholder="Название" class="popup__item popup__item_el_place">
-          <input type="text" name="image-link" placeholder="Ссылка на картинку" class="popup__item popup__item_el_link">
+          <input type="text" name="place-name" placeholder="Название" class="popup__item popup__item_el_place" required>
+          <input type="text" name="image-link" placeholder="Ссылка на картинку" class="popup__item popup__item_el_link" required>
           <button type="submit" class="popup__submit-button">Создать</button>
         </form>
         <button class="popup__close-button popup__close-button_type_card-form" type="button" aria-label="закрыть модальное окно"></button>
+      </div>
+    </div>
+    <div class="popup popup_type_image">
+      <div class="popup__container_image">
+        <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg">
+        <p class="popup__title_image"></p>
+        <button class="popup__close-button popup__close-button_type_image" type="button" aria-label="закрыть просмотровое окно"></button>
       </div>
     </div>
     <template class="card__template">
@@ -58,15 +65,8 @@
             <button class="card__delete-button" type="button" name="delete" aria-label="кнопка «удалить»"></button>
           </div>
         </article>
-        <div class="image-popup">
-          <div class="image-popup__container">
-            <img class="image-popup__image" src="">
-            <p class="image-popup__title"></p>
-            <button class="image-popup__close-button" type="button" aria-label="закрыть просмотровое окно"></button>
-          </div>
-        </div>
       </li>
     </template>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
