@@ -40,9 +40,13 @@ const imagePopupCloseButton = document.querySelector(".popup__close-button_type_
 
 // ---------- Functions ---------- //
 
-// function for opening and closing popups
-function togglePopup(element) {
-  element.classList.toggle("popup_opened");
+// function for opening popups
+function openPopup(element) {
+  element.classList.add("popup_opened");
+}
+
+function closePopup(element) {
+  element.classList.remove("popup_opened");
 }
 
 // functions for submitting forms
@@ -50,7 +54,7 @@ function submitFormProfile(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
-  popupProfile.classList.remove("popup_opened");
+  closePopup(popupProfile);
 }
 
 function submitFormCard(evt) {
@@ -61,7 +65,7 @@ function submitFormCard(evt) {
     link: imageLink.value,
   }
   cardsContainer.prepend(createCard(item));
-  togglePopup(popupCard);
+  closePopup(popupCard);
 
   // clear the input values
   placeName.value = "";
@@ -103,7 +107,7 @@ function createCard(item) {
     popupTitleImage.textContent = placeName;
     popupImage.src = imageLink;
     popupImage.alt = imageAltText;
-    togglePopup(popupTypeImage);
+    openPopup(popupTypeImage);
   });
 
   return cardElement;
@@ -114,29 +118,27 @@ function createCard(item) {
 
 // open profile popup
 profileEditButton.addEventListener("click", () => {
-  togglePopup(popupProfile)
+  openPopup(popupProfile)
 });
 
 // close profile popup
 profileCloseButton.addEventListener("click", () => {
-  togglePopup(popupProfile)
+  closePopup(popupProfile)
 });
 
 // open add-card popup
 popupCardAddButton.addEventListener("click", () => {
-  togglePopup(popupCard);
+  openPopup(popupCard);
 });
 
 // close add-card popup
 popupCardCloseButton.addEventListener("click", () => {
-  togglePopup(popupCard);
+  closePopup(popupCard);
 });
 
 // close image popup 
 imagePopupCloseButton.addEventListener("click", () => {
-  togglePopup(popupTypeImage);
-  popupTitleImage.textContent = "";
-  popupImage.src = "";
+  closePopup(popupTypeImage);
 });
 
 // submit form
