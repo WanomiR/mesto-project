@@ -45,6 +45,7 @@ function openPopup(element) {
   element.classList.add("popup_opened");
 }
 
+// function for closing popups
 function closePopup(element) {
   element.classList.remove("popup_opened");
 }
