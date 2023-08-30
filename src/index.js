@@ -1,3 +1,7 @@
+// ---------- Imports ------------ //
+
+
+
 // ---------- Variables ---------- //
 
 // profile element variables
@@ -11,20 +15,18 @@ const popupCardAddButton = document.querySelector(".profile__add-button");
 const popupCardCloseButton = document.querySelector(".popup__close-button_type_card-form");
 
 // profile form variables
-const profileFormElement = document.querySelector(".popup__form_type_profile");
-const nameInput = document.querySelector(".popup__item_el_name");
-const jobInput = document.querySelector(".popup__item_el_description");
+const profileFormElement = document.querySelector(".form_type_profile");
+const nameInput = document.querySelector(".form__input_el_name");
+const jobInput = document.querySelector(".form__input_el_description");
 
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 
 // add-card form variables
-const cardFormElement = document.querySelector(".popup__form_type_card");
-const placeNameInput = document.querySelector(".popup__item_el_place");
-const imageLinkInput = document.querySelector(".popup__item_el_link");
+const cardFormElement = document.querySelector(".form_type_card");
 
-const placeName = document.querySelector(".popup__item_el_place");
-const imageLink = document.querySelector(".popup__item_el_link");
+const placeName = document.querySelector(".form__input_el_place");
+const imageLink = document.querySelector(".form__input_el_link");
 
 // card and image popup variables
 const cardTemplate = document.querySelector(".card__template").content;
@@ -75,7 +77,7 @@ function submitFormCard(evt) {
 
 // function for creating new cards
 function createCard(item) {
-  
+
   const placeName = item.name;
   const imageLink = item.link;
   let imageAltText = "";
@@ -87,22 +89,22 @@ function createCard(item) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__title");
   const cardImage = cardElement.querySelector(".card__image");
-  
+
   cardTitle.textContent = placeName;
   cardImage.src = imageLink;
   cardImage.alt = imageAltText;
-  
+
   // like button
   cardElement.querySelector(".card__like-button").addEventListener("click", (evt) => {
     evt.target.classList.toggle("card__like-button_active");
   });
-  
+
   // delete button
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
     deleteButton.closest(".card").remove();
   });
-  
+
   // open preview button
   cardImage.addEventListener("click", () => {
     popupTitleImage.textContent = placeName;
@@ -147,9 +149,24 @@ cardFormElement.addEventListener("submit", submitFormCard);
 profileFormElement.addEventListener("submit", submitFormProfile);
 
 
+// place for enableValidation()
+const popupElement = document.querySelector(".popup_type_profile")
+
+popupElement.addEventListener("click", (evt) => {
+  evt.target.classList.remove("popup_opened")
+});
+
+
 // ---------- Initial set of cards ---------- //
 
 // load the initial set of cards
 initialCards.forEach(item => {
   cardsContainer.prepend(createCard(item));
 });
+
+
+
+// ---------- Forms validation ------------- //
+// const formElement = document.forms.userInfo
+
+
