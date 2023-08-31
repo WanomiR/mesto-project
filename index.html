@@ -26,18 +26,18 @@
 <footer class="footer">
   <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
 </footer>
-<div class="popup popup_type_profile popup_opened">
+<div class="popup popup_type_profile">
   <div class="popup__container">
     <h2 class="popup__title">Редактировать профиль</h2>
     <form class="form form_type_profile" name="userInfo" novalidate>
       <div class="form__field">
-        <input type="text" name="name" placeholder="Имя" value="Жак-Ив Кусто" class="form__input form__input_el_name"
+        <input type="text" name="userName" placeholder="Имя" value="Жак-Ив Кусто" class="form__input form__input_el_name"
                minlength="2" maxlength="40" id="input-name" pattern="[a-zA-Zа-яА-Я\-\s]+"
-               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы." required>
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
         <span class="input-name-error form__input-error">Здесь какая-то ошибка</span>
       </div>
       <div class="form__field">
-        <input type="text" name="description" placeholder="Род деятельности" value="Исследователь океана"
+        <input type="text" name="userDescription" placeholder="Род деятельности" value="Исследователь океана"
                class="form__input form__input_el_description" minlength="2" maxlength="200" id="input-description"
                pattern="[a-zA-Zа-яА-Я\-\s]+"
                data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы." required>
@@ -54,15 +54,15 @@
     <h2 class="popup__title">Новое место</h2>
     <form class="form form_type_card" name="card" novalidate>
       <div class="form__field">
-        <input type="text" name="place-name" placeholder="Название"
+        <input type="text" name="placeName" placeholder="Название"
                class="form__input form__input_el_place"
                id="input-place" minlength="2" maxlength="30" pattern="[a-zA-Zа-яА-Я\-\s]+"
-               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы."
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
                required>
         <span class="input-place-error form__input-error">Здесь какая-то ошибка</span>
       </div>
       <div class="form__field">
-        <input type="url" name="image-link" placeholder="Ссылка на картинку" class="form__input form__input_el_link"
+        <input type="url" name="imageLink" placeholder="Ссылка на картинку" class="form__input form__input_el_link"
                id="input-link" required>
         <span class="input-link-error form__input-error">Здесь какая-то ошибка</span>
       </div>
@@ -74,7 +74,7 @@
 </div>
 <div class="popup popup_type_image">
   <div class="popup__container_image">
-    <img class="popup__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg">
+    <img class="popup__image" src="">
     <p class="popup__title_image"></p>
     <button class="popup__close-button popup__close-button_type_image" type="button"
             aria-label="закрыть просмотровое окно"></button>
@@ -92,8 +92,9 @@
     </article>
   </li>
 </template>
-<script src="./src/initialCards.js" defer></script>
-<script src="./src/index.js" defer></script>
-<script src="./src/validate.js" defer></script>
+<script src="src/components/modal.js" type="module"></script>
+<script src="src/components/validate.js" type="module"></script>
+<script src="src/components/cards.js" type="module"></script>
+<script src="./src/index.js" type="module"></script>
 </body>
 </html>
