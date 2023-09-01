@@ -75,10 +75,13 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
     });
     // open preview
     cardImage.addEventListener("click", () => {
+        const imageLoadCallback = () => {
+            openPopupFunc(popupElement);
+        }
         popupTitle.textContent = placeName;
         popupImage.setAttribute("src", imageLink);
         popupImage.setAttribute("alt", imageAltText);
-        openPopupFunc(popupElement);
+        popupImage.onload = imageLoadCallback;
     });
 
     return cardElement;
