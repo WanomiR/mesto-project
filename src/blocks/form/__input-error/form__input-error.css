@@ -4,8 +4,8 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    position: absolute;
-    top: calc(100% + 5px);
+    /*position: absolute;*/
+    /*top: calc(100% + 5px);*/
     left: 0;
     opacity: 0;
     transition: 0.3s;

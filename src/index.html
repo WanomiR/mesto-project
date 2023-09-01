@@ -35,14 +35,14 @@
         <input type="text" name="userName" placeholder="Имя" value="Жак-Ив Кусто" class="form__input form__input_el_name"
                minlength="2" maxlength="40" id="input-name" pattern="[a-zA-Zа-яА-Я\-\s]+"
                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
-        <span class="input-name-error form__input-error">Здесь какая-то ошибка</span>
+        <span class="input-name-error form__input-error"></span>
       </div>
       <div class="form__field">
         <input type="text" name="userDescription" placeholder="Род деятельности" value="Исследователь океана"
                class="form__input form__input_el_description" minlength="2" maxlength="200" id="input-description"
                pattern="[a-zA-Zа-яА-Я\-\s]+"
-               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы." required>
-        <span class="input-description-error form__input-error">Здесь какая-то ошибка</span>
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
+        <span class="input-description-error form__input-error"></span>
       </div>
       <button type="submit" class="form__submit-button">Сохранить</button>
     </form>
@@ -60,12 +60,12 @@
                id="input-place" minlength="2" maxlength="30" pattern="[a-zA-Zа-яА-Я\-\s]+"
                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
                required>
-        <span class="input-place-error form__input-error">Здесь какая-то ошибка</span>
+        <span class="input-place-error form__input-error"></span>
       </div>
       <div class="form__field">
         <input type="url" name="imageLink" placeholder="Ссылка на картинку" class="form__input form__input_el_link"
                id="input-link" required>
-        <span class="input-link-error form__input-error">Здесь какая-то ошибка</span>
+        <span class="input-link-error form__input-error"></span>
       </div>
       <button type="submit" class="form__submit-button">Создать</button>
     </form>
