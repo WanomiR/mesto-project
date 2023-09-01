@@ -1,2 +1,4 @@
 .DS_Store
 .vscdoe
+node_modules
+dist
