@@ -15,12 +15,21 @@ const profileDescription = document.querySelector(".profile__subtitle");
 
 // ---------- Functions ---------- //
 
-function openPopup(popupElement) {
-    popupElement.classList.add("popup_opened");
+const closeByEscape = evt => {
+    const popupElement = evt.currentTarget.querySelector(".popup_opened");
+    if (evt.key === "Escape") {
+        closePopup(popupElement);
+    }
 }
 
-function closePopup(popupElement) {
+const openPopup = popupElement => {
+    popupElement.classList.add("popup_opened");
+    document.addEventListener("keyup", closeByEscape);
+}
+
+const closePopup = popupElement => {
     popupElement.classList.remove("popup_opened");
+    document.removeEventListener("keyup", closeByEscape);
 }
 
 // functions for submitting forms

@@ -1,5 +1,6 @@
 // ---------- Imports ------------ //
 
+import "./pages/index.css";
 import {enableValidation} from "./components/validate.js";
 import {loadInitialCards} from "./components/cards.js";
 import {openPopup, closePopup, submitFormCard, submitFormProfile} from "./components/modal.js"
@@ -47,11 +48,6 @@ popupElementsList.forEach((popupElement) => {
     });
     popupElement.addEventListener("click", (evt) => {
         closePopup(evt.target);
-    });
-    document.addEventListener("keyup", (evt) => {
-        if (evt.key === "Escape") {
-            closePopup(popupElement);
-        }
     });
 });
 
