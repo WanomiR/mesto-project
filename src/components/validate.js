@@ -49,10 +49,15 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
 
     toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     inputList.forEach((inputElement) => {
-        inputElement.addEventListener("input", function () {
+        inputElement.addEventListener("input", (evt) => {
             checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
             toggleButtonState(inputList, buttonElement, inactiveButtonClass);
         });
+        inputElement.addEventListener("keyup", evt => {
+            if (evt.key === "Escape") {
+                document.querySelector(".popup_opened").classList.remove("popup_opened")
+            }
+        })
     });
 }
 

@@ -3,7 +3,7 @@
 import "./pages/index.css";
 import {enableValidation} from "./components/validate.js";
 import {loadInitialCards} from "./components/cards.js";
-import {openPopup, closePopup, submitFormCard, submitFormProfile} from "./components/modal.js"
+import {openPopup, closePopup, closeByEscape, submitFormCard, submitFormProfile} from "./components/modal.js"
 
 // ---------- Variables ---------- //
 
@@ -42,7 +42,6 @@ addCardButton.addEventListener("click", () => {
 // close popups functionality
 popupElementsList.forEach((popupElement) => {
     const closeButton = popupElement.querySelector(".popup__close-button");
-
     closeButton.addEventListener("click", (evt) => {
         closePopup(popupElement);
     });

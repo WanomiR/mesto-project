@@ -52,4 +52,4 @@ function submitFormCard(evt) {
 
 // ---------- Exports ----------- //
 
-export { openPopup, closePopup, submitFormCard, submitFormProfile, popupTypeImage }
+export { openPopup, closePopup, closeByEscape, submitFormCard, submitFormProfile, popupTypeImage }
