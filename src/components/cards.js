@@ -16,7 +16,7 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
 
     const placeName = cardContent.name;
     const imageLink = cardContent.link;
-    let imageAltText = ""
+    let imageAltText = "altTextPlaceholder"
 
     if (!!cardContent.alt) {
         imageAltText = cardContent.alt
