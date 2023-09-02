@@ -1,3 +1,7 @@
+// ---------- Imports ------------ //
+import {disableButton, enableButton} from "./utils.js";
+
+
 // ---------- Functions ---------- //
 
 const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
@@ -35,23 +39,23 @@ const hasInvalidInput = (inputList) => {
 
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(inactiveButtonClass);
+        disableButton(buttonElement, inactiveButtonClass);
         buttonElement.setAttribute("disabled", true);
     } else {
-        buttonElement.classList.remove(inactiveButtonClass);
+        enableButton(buttonElement, inactiveButtonClass);
         buttonElement.removeAttribute("disabled");
     }
 }
 
-const setEventListeners = (formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) => {
-    const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-    const buttonElement = formElement.querySelector(submitButtonSelector);
+const setEventListeners = (formElement, params) => {
+    const inputList = Array.from(formElement.querySelectorAll(params.inputSelector));
+    const buttonElement = formElement.querySelector(params.submitButtonSelector);
 
-    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+    toggleButtonState(inputList, buttonElement, params.inactiveButtonClass);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener("input", (evt) => {
-            checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);
-            toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+            checkInputValidity(formElement, inputElement, params.inputErrorClass, params.errorClass);
+            toggleButtonState(inputList, buttonElement, params.inactiveButtonClass);
         });
         inputElement.addEventListener("keyup", evt => {
             if (evt.key === "Escape") {
@@ -61,25 +65,16 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector, ina
     });
 }
 
-
 const enableValidation = (params) => {
-
     const formList = Array.from(document.querySelectorAll(params.formSelector));
     formList.forEach((formElement) => {
         formElement.addEventListener("submit", (evt) => {
             evt.preventDefault();
         });
-        setEventListeners(
-            formElement,
-            params.inputSelector,
-            params.submitButtonSelector,
-            params.inactiveButtonClass,
-            params.inputErrorClass,
-            params.errorClass
-        );
+        setEventListeners(formElement, params);
     });
 }
 
 // ---------- Exports ----------- //
 
-export {enableValidation};
+export {enableValidation, toggleButtonState, hideInputError };

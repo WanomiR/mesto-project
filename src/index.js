@@ -3,19 +3,19 @@
 import "./pages/index.css";
 import {enableValidation} from "./components/validate.js";
 import {loadInitialCards} from "./components/cards.js";
-import {openPopup, closePopup, closeByEscape, submitFormCard, submitFormProfile} from "./components/modal.js"
+import {
+    openPopup,
+    closePopup,
+    submitFormCard,
+    submitFormProfile,
+    updateProfileForm,
+    formElementCard,
+    formElementProfile
+} from "./components/modal.js"
+import {selectorsSet} from "./components/utils.js";
+
 
 // ---------- Variables ---------- //
-
-// selectors for enabling validation
-const validationSelectorsSet = {
-    formSelector: ".form",
-    inputSelector: ".form__input",
-    submitButtonSelector: ".form__submit-button",
-    inactiveButtonClass: "form__submit-button_disabled",
-    inputErrorClass: "form__input_type_error",
-    errorClass: "form__input-error_active"
-}
 
 // popup elements
 const popupElementsList = Array.from(document.querySelectorAll(".popup"))
@@ -24,16 +24,14 @@ const popupCard = document.querySelector(".popup_type_card");
 // profile elements
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
-// form elements
-const formElementProfile = document.querySelector(".form_type_profile");
-const formElementCard = document.querySelector(".form_type_card");
 
 
 // ---------- Listeners ---------- //
 
 // open popups functionality
 profileEditButton.addEventListener("click", () => {
-    openPopup(popupProfile)
+    updateProfileForm();
+    openPopup(popupProfile);
 });
 addCardButton.addEventListener("click", () => {
     openPopup(popupCard);
@@ -60,4 +58,4 @@ formElementProfile.addEventListener("submit", submitFormProfile);
 // load the initial set of cards
 loadInitialCards();
 // enable forms validation
-enableValidation(validationSelectorsSet);
+enableValidation(selectorsSet);
