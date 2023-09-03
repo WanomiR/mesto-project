@@ -52,8 +52,8 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
             popupImage.onload = resolve;
             popupImage.onerror = reject;
         })
-            .then(evt => openPopupFunc(popupElement))
-            .catch(res => console.log("Image loading error"))
+            .then(() => openPopupFunc(popupElement))
+            .catch(() => console.log("Image loading error"))
     });
 
     return cardElement;
