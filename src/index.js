@@ -40,7 +40,7 @@ addCardButton.addEventListener("click", () => {
 // close popups functionality
 popupElementsList.forEach((popupElement) => {
     const closeButton = popupElement.querySelector(".popup__close-button");
-    closeButton.addEventListener("click", (evt) => {
+    closeButton.addEventListener("click", () => {
         closePopup(popupElement);
     });
     popupElement.addEventListener("click", (evt) => {
