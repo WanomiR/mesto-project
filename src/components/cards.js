@@ -45,13 +45,15 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
     });
     // open preview
     cardImage.addEventListener("click", () => {
-        const imageLoadCallback = () => {
-            openPopupFunc(popupElement);
-        }
-        popupTitle.textContent = placeName;
-        popupImage.setAttribute("src", imageLink);
-        popupImage.setAttribute("alt", imageAltText);
-        popupImage.onload = imageLoadCallback;
+        new Promise((resolve, reject) => {
+            popupTitle.textContent = placeName;
+            popupImage.setAttribute("src", imageLink);
+            popupImage.setAttribute("alt", imageAltText);
+            popupImage.onload = resolve;
+            popupImage.onerror = reject;
+        })
+            .then(evt => openPopupFunc(popupElement))
+            .catch(res => console.log(res.status))
     });
 
     return cardElement;
