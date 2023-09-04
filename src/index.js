@@ -63,21 +63,3 @@ enableValidation(selectorsSet);
 
 // ---------- Test Zone ---------- //
 
-const makeRequest = (dir, headersParams, ...otherParams) => {
-    return fetch(`https://mesto.nomoreparties.co/v1/plus-cohort-28/${dir}`, {
-        headers: {
-            authorization: "ae8892c5-a1e1-40d3-aba9-31eb2dd98185",
-            ...headersParams
-        },
-        ...otherParams
-    });
-}
-
-
-makeRequest("users/me", null, {method: "GET"})
-    .then(res => res.json())
-    .then(res => console.log(res));
-
-// console.log(param)
-// console.log(JSON.parse(param))
-
