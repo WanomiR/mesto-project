@@ -5,12 +5,5 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  grid-area: profile-pic;
-  justify-self: flex-end;
 }
 
-@media screen and (max-width: 650px) {
-  .profile__avatar {
-    justify-self: center;
-  }
-}

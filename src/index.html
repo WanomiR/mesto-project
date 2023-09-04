@@ -7,13 +7,14 @@
 </head>
 <body class="page">
 <header class="header">
-  <img class="header__logo"
-       src="<%=require('./images/mesto-logo.svg')%>"
-       alt="логотип проекта Mesto">
+  <img class="header__logo" src="<%=require('./images/mesto-logo.svg')%>" alt="логотип проекта Mesto">
 </header>
 <main class="content">
   <section class="profile">
-    <img class="profile__avatar" src="<%=require('./images/jacque.jpg')%>" alt="фотография пользователя">
+    <div class="profile__avatar-container">
+      <button class="profile__edit-avatar-button" type="button" aria-label="Редактировать фотографию профиля"></button>
+      <img class="profile__avatar" src="<%=require('./images/jacque.jpg')%>" alt="фотография пользователя">
+    </div>
     <h1 class="profile__title">Жак-Ив Кусто</h1>
     <p class="profile__subtitle">Исследователь океана</p>
     <button class="profile__edit-button" type="button" aria-label="Редактировать данные профиля"></button>
@@ -32,22 +33,33 @@
     <h2 class="popup__title">Редактировать профиль</h2>
     <form class="form form_type_profile" name="userInfo" novalidate>
       <div class="form__field">
-        <input type="text" name="userName" placeholder="Имя" value="Жак-Ив Кусто" class="form__input form__input_el_name"
+        <input type="text" name="userName" placeholder="Имя" value="Жак-Ив Кусто" class="form__input"
                minlength="2" maxlength="40" id="input-name" pattern="[a-zA-Zа-яА-Я\-\s]+"
                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
         <span class="input-name-error form__input-error"></span>
       </div>
       <div class="form__field">
         <input type="text" name="userDescription" placeholder="Род деятельности" value="Исследователь океана"
-               class="form__input form__input_el_description" minlength="2" maxlength="200" id="input-description"
-               pattern="[a-zA-Zа-яА-Я\-\s]+"
+               class="form__input" minlength="2" maxlength="200" id="input-description" pattern="[a-zA-Zа-яА-Я\-\s]+"
                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
         <span class="input-description-error form__input-error"></span>
       </div>
       <button type="submit" name="submitButton" class="form__submit-button">Сохранить</button>
     </form>
-    <button class="popup__close-button popup__close-button_type_profile" type="button"
-            aria-label="закрыть модальное окно"></button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
+  </div>
+</div>
+<div class="popup popup_type_avatar">
+  <div class="popup__container">
+    <h2 class="popup__title">Обновить аватар</h2>
+    <form class="form form_type_avatar" name="profileAvatar" novalidate>
+      <div class="form__field">
+        <input type="url" name="avatarLink" placeholder="Ссылка на фото" class="form__input" id="avatar-link" required>
+        <span class="avatar-link-error form__input-error"></span>
+      </div>
+      <button type="submit" name="submitButton" class="form__submit-button">Сохранить</button>
+    </form>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
 <div class="popup popup_type_card">
@@ -55,29 +67,25 @@
     <h2 class="popup__title">Новое место</h2>
     <form class="form form_type_card" name="card" novalidate>
       <div class="form__field">
-        <input type="text" name="placeName" placeholder="Название"
-               class="form__input form__input_el_place"
+        <input type="text" name="placeName" placeholder="Название" class="form__input"
                id="input-place" minlength="2" maxlength="30" pattern="[a-zA-Zа-яА-Я\-\s]+"
-               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы."
-               required>
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
         <span class="input-place-error form__input-error"></span>
       </div>
       <div class="form__field">
-        <input type="url" name="imageLink" placeholder="Ссылка на картинку" class="form__input form__input_el_link"
-               id="input-link" required>
+        <input type="url" name="imageLink" placeholder="Ссылка на картинку" class="form__input" id="input-link" required>
         <span class="input-link-error form__input-error"></span>
       </div>
       <button type="submit" name="submitButton" class="form__submit-button">Создать</button>
     </form>
-    <button class="popup__close-button popup__close-button_type_card-form" type="button"
-            aria-label="закрыть модальное окно"></button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
 <div class="popup popup_type_image">
   <div class="popup__container_image">
     <img class="popup__image" src="">
     <p class="popup__title_image"></p>
-    <button class="popup__close-button popup__close-button_type_image" type="button"
+    <button class="popup__close-button" type="button"
             aria-label="закрыть просмотровое окно"></button>
   </div>
 </div>
