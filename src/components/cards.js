@@ -1,7 +1,7 @@
 // ---------- Imports ------------ //
 
 import {cardsInitialSet} from "./utils.js";
-import {openPopup, popupTypeImage} from "./modal.js";
+import {closePopup, openPopup, popupTypeImage} from "./modal.js";
 
 
 // ---------- Variables ---------- //
@@ -9,10 +9,13 @@ import {openPopup, popupTypeImage} from "./modal.js";
 const cardsContainer = document.querySelector(".places__grid");
 const cardTemplate = document.querySelector(".card__template").content;
 
+// variables for confirming deletion functionality
+const popupConfirmDelete = document.querySelector(".popup_type_confirm-delete");
+const formElementConfirmDelete = document.querySelector(".form_type_confirm-delete");
 
 // ---------- Functions ---------- //
 
-const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
+const createCard = (cardContent, cardTemplate, popupElement) => {
 
     const placeName = cardContent.name;
     const imageLink = cardContent.link;
@@ -39,9 +42,17 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
     cardElement.querySelector(".card__like-button").addEventListener("click", (evt) => {
         evt.target.classList.toggle("card__like-button_active");
     });
+
     // delete card
     deleteButton.addEventListener("click", () => {
-        deleteButton.closest(".card").remove();
+        const deleteCard = () => {
+            deleteButton.closest(".card").remove();
+            closePopup(popupConfirmDelete);
+            formElementConfirmDelete.removeEventListener("submit", deleteCard);
+        }
+
+        formElementConfirmDelete.addEventListener("submit", deleteCard);
+        openPopup(popupConfirmDelete);
     });
     // open preview
     cardImage.addEventListener("click", () => {
@@ -52,7 +63,7 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
             popupImage.onload = resolve;
             popupImage.onerror = reject;
         })
-            .then(() => openPopupFunc(popupElement))
+            .then(() => openPopup(popupElement))
             .catch(() => console.log("Image loading error"))
     });
 
@@ -61,7 +72,7 @@ const createCard = (cardContent, cardTemplate, popupElement, openPopupFunc) => {
 
 const loadInitialCards = () => {
     cardsInitialSet.forEach(item => {
-        cardsContainer.prepend(createCard(item, cardTemplate, popupTypeImage, openPopup));
+        cardsContainer.prepend(createCard(item, cardTemplate, popupTypeImage));
     });
 }
 
