@@ -5,5 +5,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  text-align: center;
+  line-height: 30px;
 }
 

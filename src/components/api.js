@@ -36,10 +36,44 @@ const getUserInfo = () => {
         });
 }
 
+const patchUserInfo = (inputName, inputDescription) => {
+    return fetch(`${apiConfig.baseUrl}/users/me`, {
+        method: "PATCH",
+        headers: apiConfig.headers,
+        body: JSON.stringify({
+            name: inputName,
+            about: inputDescription
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            Promise.reject(`Error patching user info: ${res.status}`);
+        });
+}
+
+
+const patchAvatar = (avatarLink) => {
+    return fetch(`${apiConfig.baseUrl}/users/me/avatar`, {
+        method: "PATCH",
+        headers: apiConfig.headers,
+        body: JSON.stringify({
+            avatar: avatarLink
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            Promise.reject(`Error patching user avatar: ${res.status}`);
+        });
+}
+
 
 // ---------- Exports ----------- //
 
-export {getInitialCards, getUserInfo}
+export {getInitialCards, getUserInfo, patchUserInfo, patchAvatar}
 
 // // test request to the server
 // const makeRequest = (dir, headersParams = null, ...otherParams) => {

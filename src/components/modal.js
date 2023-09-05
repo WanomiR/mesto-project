@@ -3,6 +3,7 @@
 import {cardsContainer, cardTemplate, createCard} from "./cards.js"
 import {hideInputError} from "./validate.js";
 import {selectorsSet, disableButton, enableButton} from "./utils.js";
+import {patchAvatar, patchUserInfo} from "./api.js";
 
 
 // ---------- Variables ---------- //
@@ -10,10 +11,12 @@ import {selectorsSet, disableButton, enableButton} from "./utils.js";
 // popup elements
 const popupTypeImage = document.querySelector(".popup_type_image");
 const popupTypeProfile = document.querySelector(".popup_type_profile");
+const popupAvatar = document.querySelector(".popup_type_avatar");
 const popupTypeCard = document.querySelector(".popup_type_card");
 // profile elements
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
+const profileAvatar = document.querySelector(".profile__avatar");
 // form elements
 const forms = document.forms
 // profile form elements
@@ -21,6 +24,10 @@ const formElementProfile = forms.userInfo;
 const inputName = formElementProfile.elements.userName;
 const inputDescription = formElementProfile.elements.userDescription;
 const submitButtonProfile = formElementProfile.elements.submitButton;
+// avatar form elements
+const formElementAvatar = forms.profileAvatar;
+const avatarLink = formElementAvatar.elements.avatarLink;
+const submitButtonAvatar = formElementAvatar.elements.submitButton;
 // add-card form elements
 const formElementCard = forms.card;
 const placeName = formElementCard.elements.placeName;
@@ -48,10 +55,26 @@ const closePopup = popupElement => {
 }
 
 function submitFormProfile() {
-    profileName.textContent = inputName.value;
-    profileDescription.textContent = inputDescription.value;
+    patchUserInfo(inputName.value, inputDescription.value)
+        .then(userInfo => {
+            profileName.textContent = userInfo.name;
+            profileDescription.textContent = userInfo.about;
+        })
+        .catch(err => console.log(err));
     closePopup(popupTypeProfile);
 }
+
+const submitFormAvatar = () => {
+    patchAvatar(avatarLink.value)
+        .then(userInfo => {
+            profileAvatar.src = userInfo.avatar;
+        })
+        .catch(err => console.log(err));
+    closePopup(popupAvatar);
+    formElementAvatar.reset();
+    disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
+}
+
 
 const updateProfileForm = () => {
     const inputList = Array.from([inputName, inputDescription]);
@@ -86,14 +109,17 @@ function submitFormCard() {
 export {
     formElementCard,
     formElementProfile,
+    formElementAvatar,
     openPopup,
     closePopup,
     closeByEscape,
     submitFormCard,
     submitFormProfile,
+    submitFormAvatar,
     popupTypeImage,
     forms,
     updateProfileForm,
     profileName,
-    profileDescription
+    profileDescription,
+    profileAvatar
 }

@@ -1,6 +1,5 @@
 // ---------- Imports ------------ //
 
-import {cardsInitialSet} from "./utils.js";
 import {closePopup, openPopup, popupTypeImage} from "./modal.js";
 import {getInitialCards} from "./api";
 
