@@ -93,5 +93,7 @@ export {
     submitFormProfile,
     popupTypeImage,
     forms,
-    updateProfileForm
+    updateProfileForm,
+    profileName,
+    profileDescription
 }

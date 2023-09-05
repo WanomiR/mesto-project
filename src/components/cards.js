@@ -2,6 +2,7 @@
 
 import {cardsInitialSet} from "./utils.js";
 import {closePopup, openPopup, popupTypeImage} from "./modal.js";
+import {getInitialCards} from "./api";
 
 
 // ---------- Variables ---------- //
@@ -56,12 +57,11 @@ const createCard = (cardContent, cardTemplate, popupElement) => {
     });
     // open preview
     cardImage.addEventListener("click", () => {
-        new Promise((resolve, reject) => {
+        new Promise((resolve) => {
             popupTitle.textContent = placeName;
             popupImage.setAttribute("src", imageLink);
             popupImage.setAttribute("alt", imageAltText);
             popupImage.onload = resolve;
-            popupImage.onerror = reject;
         })
             .then(() => openPopup(popupElement))
             .catch(() => console.log("Image loading error"))
@@ -71,9 +71,13 @@ const createCard = (cardContent, cardTemplate, popupElement) => {
 }
 
 const loadInitialCards = () => {
-    cardsInitialSet.forEach(item => {
-        cardsContainer.prepend(createCard(item, cardTemplate, popupTypeImage));
-    });
+    getInitialCards()
+        .then(cardsSet => {
+            cardsSet.forEach(item => {
+                cardsContainer.prepend(createCard(item, cardTemplate, popupTypeImage))
+            })
+        })
+        .catch(err => console.log(err));
 }
 
 // ---------- Exports ----------- //

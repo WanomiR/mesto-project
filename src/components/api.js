@@ -9,9 +9,37 @@ const apiConfig = {
 }
 
 
+// ---------- Functions ----------//
+
+const getInitialCards = () => {
+    return fetch(`${apiConfig.baseUrl}/cards`, {
+        headers: apiConfig.headers,
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            Promise.reject(`Error loading cards: ${res.status}`);
+        });
+}
+
+const getUserInfo = () => {
+    return fetch(`${apiConfig.baseUrl}/users/me`, {
+        method: "GET",
+        headers: apiConfig.headers,
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            Promise.reject(`Error loading user info: ${res.status}`);
+        });
+}
+
+
 // ---------- Exports ----------- //
 
-export {apiConfig}
+export {getInitialCards, getUserInfo}
 
 // // test request to the server
 // const makeRequest = (dir, headersParams = null, ...otherParams) => {

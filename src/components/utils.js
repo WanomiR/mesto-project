@@ -1,6 +1,9 @@
 // ---------- Variables ---------- //
 
 // selectors for enabling forms validation
+import {getUserInfo} from "./api";
+import {profileDescription, profileName} from "./modal.js";
+
 const selectorsSet = {
     formSelector: ".form",
     inputSelector: ".form__input",
@@ -60,6 +63,16 @@ const enableButton = (buttonElement, inactiveButtonClass) => {
 }
 
 
+const loadUserInfo = () => {
+    getUserInfo()
+        .then(userInfo => {
+            profileName.textContent = userInfo.name;
+            profileDescription.textContent = userInfo.about;
+        })
+        .catch(err => console.log(err))
+}
+
+
 // ---------- Exports ----------- //
 
-export {selectorsSet, cardsInitialSet, disableButton, enableButton}
+export {selectorsSet, cardsInitialSet, disableButton, enableButton, loadUserInfo}

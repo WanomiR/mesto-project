@@ -10,12 +10,9 @@ import {
     submitFormProfile,
     updateProfileForm,
     formElementCard,
-    formElementProfile
+    formElementProfile,
 } from "./components/modal.js"
-import {selectorsSet} from "./components/utils.js";
-import {apiConfig} from "./components/api";
-// import {getResponse} from "./components/api";
-
+import {selectorsSet, loadUserInfo} from "./components/utils.js";
 
 // ---------- Variables ---------- //
 
@@ -57,15 +54,12 @@ formElementProfile.addEventListener("submit", submitFormProfile);
 
 // ---------- Functions ---------- //
 
+// load user info
+loadUserInfo();
 // load the initial set of cards
 loadInitialCards();
 // enable forms validation
+
 enableValidation(selectorsSet);
 
 // ---------- Test Zone ---------- //
-
-fetch(`${apiConfig.baseUrl}/cards`, {
-    headers: apiConfig.headers,
-})
-    .then(res => res.json())
-    .then(res => console.log(res));
