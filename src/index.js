@@ -13,6 +13,7 @@ import {
     formElementProfile
 } from "./components/modal.js"
 import {selectorsSet} from "./components/utils.js";
+import {apiConfig} from "./components/api";
 // import {getResponse} from "./components/api";
 
 
@@ -63,3 +64,8 @@ enableValidation(selectorsSet);
 
 // ---------- Test Zone ---------- //
 
+fetch(`${apiConfig.baseUrl}/cards`, {
+    headers: apiConfig.headers,
+})
+    .then(res => res.json())
+    .then(res => console.log(res));

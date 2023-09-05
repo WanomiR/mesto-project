@@ -77,4 +77,5 @@ const loadInitialCards = () => {
 }
 
 // ---------- Exports ----------- //
+
 export {cardsContainer, createCard, loadInitialCards, cardTemplate}

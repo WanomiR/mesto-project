@@ -45,6 +45,8 @@ const cardsInitialSet = [
 ];
 
 
+
+
 // ---------- Functions ---------- //
 
 const disableButton = (buttonElement, inactiveButtonClass) => {
