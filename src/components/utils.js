@@ -1,7 +1,7 @@
 // ---------- Variables ---------- //
 
 // selectors for enabling forms validation
-import {getUserInfo} from "./api";
+import {deleteLike, getUserInfo, putLike} from "./api";
 import {profileAvatar, profileDescription, profileName} from "./modal.js";
 
 const selectorsSet = {
@@ -13,7 +13,7 @@ const selectorsSet = {
     errorClass: "form__input-error_active"
 }
 
-
+// object for storing user data
 
 // ---------- Functions ---------- //
 
@@ -28,17 +28,53 @@ const enableButton = (buttonElement, inactiveButtonClass) => {
 }
 
 
-const loadProfileData = () => {
+const updateProfile = () => {
     getUserInfo()
-        .then(userInfo => {
-            profileName.textContent = userInfo.name;
-            profileDescription.textContent = userInfo["about"];
-            profileAvatar.src = userInfo["avatar"];
+        .then(res => {
+            profileName.textContent = res.name;
+            profileName.dataset.userId = res._id;
+            profileDescription.textContent = res.about;
+            profileAvatar.src = res.avatar;
+
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
+}
+
+const updateLikesCounter = (cardContent, likesCounter) => {
+    const nLikes = cardContent.likes.length;
+    if (nLikes > 0) {
+        likesCounter.classList.add("card__like-counter_active");
+        likesCounter.textContent = nLikes;
+    } else {
+        likesCounter.classList.remove("card__like-counter_active");
+        likesCounter.textContent = "";
+    }
+}
+
+const hasMyLike = (cardContent, myUserId) => {
+    return cardContent.likes.some(userData => {
+        return userData._id === myUserId
+    })
+}
+
+const updateLikeButtonState = (likeButton, cardContent, likesCounter, currUserId) => {
+    if (hasMyLike(cardContent, currUserId)) {
+        likeButton.classList.add("card__like-button_active");
+    } else {
+        likeButton.classList.remove("card__like-button_active");
+    }
+    updateLikesCounter(cardContent, likesCounter)
 }
 
 
 // ---------- Exports ----------- //
 
-export {selectorsSet, disableButton, enableButton, loadProfileData}
+export {
+    selectorsSet,
+    disableButton,
+    enableButton,
+    updateProfile,
+    updateLikesCounter,
+    hasMyLike,
+    updateLikeButtonState,
+}

@@ -14,7 +14,7 @@ import {
     formElementProfile,
     formElementAvatar
 } from "./components/modal.js"
-import {selectorsSet, loadProfileData} from "./components/utils.js";
+import {selectorsSet, updateProfile} from "./components/utils.js";
 
 // ---------- Variables ---------- //
 
@@ -64,7 +64,7 @@ formElementAvatar.addEventListener("submit", submitFormAvatar);
 // ---------- Functions ---------- //
 
 // load user info
-loadProfileData();
+updateProfile();
 // load the initial set of cards
 loadInitialCards();
 // enable forms validation

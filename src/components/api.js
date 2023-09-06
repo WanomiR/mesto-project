@@ -81,35 +81,38 @@ const postNewCard = (placeName, imageLink) => {
         })
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
+            if (res.ok) return res.json();
             Promise.reject(`Error posting new card: ${res.status}`);
         });
 }
 
 
+
+
+const putLike = (cardId) => {
+    return fetch(`${apiConfig.baseUrl}/cards/likes/${cardId}`, {
+        method: "PUT",
+        headers: apiConfig.headers
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+            Promise.reject(`Error putting like: ${res.status}`);
+        });
+}
+
+const deleteLike = (cardId) => {
+    return fetch(`${apiConfig.baseUrl}/cards/likes/${cardId}`, {
+        method: "DELETE",
+        headers: apiConfig.headers
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+            Promise.reject(`Error putting like: ${res.status}`);
+        });
+}
+
 // ---------- Exports ----------- //
 
-export {getInitialCards, getUserInfo, patchUserInfo, patchAvatar, postNewCard}
+export {getInitialCards, getUserInfo, patchUserInfo, patchAvatar, postNewCard, putLike, deleteLike}
 
-// // test request to the server
-// const makeRequest = (dir, headersParams = null, ...otherParams) => {
-//     return fetch(`https://mesto.nomoreparties.co/v1/plus-cohort-28/${dir}`, {
-//         headers: {
-//             authorization: "ae8892c5-a1e1-40d3-aba9-31eb2dd98185",
-//             ...headersParams
-//         },
-//         ...otherParams
-//     });
-// }
-//
-//
-// makeRequest("cards", null, {method: "GET"})
-//     .then(res => res.json())
-//     .then(res => console.log(res));
-//
-// // console.log(param)
-// // console.log(JSON.parse(param))
-//
-//
+
