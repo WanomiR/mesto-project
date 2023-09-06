@@ -3,7 +3,7 @@
 import {cardsContainer, cardTemplate, createCard} from "./cards.js"
 import {hideInputError} from "./validate.js";
 import {selectorsSet, disableButton, enableButton} from "./utils.js";
-import {patchAvatar, patchUserInfo} from "./api.js";
+import {patchAvatar, patchUserInfo, postNewCard} from "./api.js";
 
 
 // ---------- Variables ---------- //
@@ -92,11 +92,12 @@ const updateProfileForm = () => {
 
 
 function submitFormCard() {
-    const cardContent = {
-        name: placeName.value,
-        link: imageLink.value
-    }
-    cardsContainer.prepend(createCard(cardContent, cardTemplate, popupTypeImage, openPopup));
+    postNewCard(placeName.value, imageLink.value)
+        .then(cardContent => {
+            cardsContainer.prepend(createCard(cardContent, cardTemplate, popupTypeImage, openPopup));
+        })
+        .catch(err => console.log(err))
+    
     closePopup(popupTypeCard);
     // clear the form inputs and update button state
     formElementCard.reset()
