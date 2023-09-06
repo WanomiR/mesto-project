@@ -68,7 +68,7 @@ loadProfileData();
 // load the initial set of cards
 loadInitialCards();
 // enable forms validation
-
 enableValidation(selectorsSet);
+// show page after everything is loaded
 
 // ---------- Test Zone ---------- //
