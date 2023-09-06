@@ -57,19 +57,28 @@ const closePopup = popupElement => {
 function submitFormProfile() {
     patchUserInfo(inputName.value, inputDescription.value)
         .then(userInfo => {
+            submitButtonProfile.textContent = "Cохранение..."
             profileName.textContent = userInfo.name;
             profileDescription.textContent = userInfo.about;
         })
-        .catch(err => console.log(err));
-    closePopup(popupTypeProfile);
+        .catch(err => console.log(err))
+        .finally(() => {
+            submitButtonProfile.textContent = "Сохранить";
+            closePopup(popupTypeProfile);
+        });
 }
 
 const submitFormAvatar = () => {
     patchAvatar(avatarLink.value)
         .then(userInfo => {
+            submitButtonAvatar.textContent = "Coхранение..."
             profileAvatar.src = userInfo.avatar;
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .finally(() => {
+            submitButtonAvatar.textContent = "Сохранить";
+        })
+
     closePopup(popupAvatar);
     formElementAvatar.reset();
     disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
@@ -94,9 +103,13 @@ const updateProfileForm = () => {
 function submitFormCard() {
     postNewCard(placeName.value, imageLink.value)
         .then(cardContent => {
+            submitButtonCard.textContent = "Сохранение..."
             cardsContainer.prepend(createCard(cardContent, cardTemplate, popupTypeImage, openPopup));
         })
         .catch(err => console.log(err))
+        .finally(() => {
+            submitButtonCard.textContent = "Сохранить";
+        })
     
     closePopup(popupTypeCard);
     // clear the form inputs and update button state

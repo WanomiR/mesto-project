@@ -1,8 +1,8 @@
 // ---------- Imports ------------ //
 
 import {closePopup, openPopup, popupTypeImage, profileName} from "./modal.js";
-import {getInitialCards, putLike, deleteLike} from "./api.js";
-import {hasMyLike, updateLikeButtonState, updateLikeButton} from "./utils.js";
+import {getInitialCards, putLike, deleteLike, deleteCardRequest} from "./api.js";
+import {hasMyLike, updateLikeButtonState, createdByMe, } from "./utils.js";
 
 // ---------- Variables ---------- //
 
@@ -39,17 +39,20 @@ const createCard = (cardContent, cardTemplate, popupElement) => {
     // current user id
     const myUserId = profileName.dataset.userId;
 
+    // update delete button state
+    if (createdByMe(cardContent, myUserId)) {
+        deleteButton.classList.add("card__delete-button_active");
+    }
+
     cardTitle.textContent = placeName;
     cardImage.setAttribute("src", imageLink);
     cardImage.setAttribute("alt", imageAltText);
 
     updateLikeButtonState(likeButton, cardContent, likesCounter, myUserId);
 
-    // put like
+    // like button functionality
     likeButton.addEventListener("click", (evt) => {
-
         const buttonElement = evt.target;
-
         if (!hasMyLike(cardContent, myUserId)) {
             putLike(cardContent._id)
                 .then(cardContentUpdated => {
@@ -67,17 +70,26 @@ const createCard = (cardContent, cardTemplate, popupElement) => {
         }
     });
 
-    // delete card
+    // delete card functionality
     deleteButton.addEventListener("click", () => {
         const deleteCard = () => {
-            deleteButton.closest(".card").remove();
-            closePopup(popupConfirmDelete);
-            formElementConfirmDelete.removeEventListener("submit", deleteCard);
+
+            deleteCardRequest(cardContent._id)
+                // .then(res => console.log(res.message))
+                .then(res => {
+                    console.log(res.message)
+                    deleteButton.closest(".card").remove();
+                    closePopup(popupConfirmDelete);
+                    formElementConfirmDelete.removeEventListener("submit", deleteCard);
+                })
+                .catch(err => console.log(err))
+
         }
 
         formElementConfirmDelete.addEventListener("submit", deleteCard);
         openPopup(popupConfirmDelete);
     });
+
     // open preview
     cardImage.addEventListener("click", () => {
         new Promise((resolve, reject) => {

@@ -51,9 +51,9 @@ const updateLikesCounter = (cardContent, likesCounter) => {
     }
 }
 
-const hasMyLike = (cardContent, myUserId) => {
+const hasMyLike = (cardContent, currUserId) => {
     return cardContent.likes.some(userData => {
-        return userData._id === myUserId
+        return userData._id === currUserId
     })
 }
 
@@ -66,6 +66,9 @@ const updateLikeButtonState = (likeButton, cardContent, likesCounter, currUserId
     updateLikesCounter(cardContent, likesCounter)
 }
 
+const createdByMe = (cardContent, currUserId) => {
+    return cardContent.owner._id === currUserId
+}
 
 // ---------- Exports ----------- //
 
@@ -77,4 +80,5 @@ export {
     updateLikesCounter,
     hasMyLike,
     updateLikeButtonState,
+    createdByMe
 }
