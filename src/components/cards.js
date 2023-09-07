@@ -107,14 +107,10 @@ const createCard = (cardContent, cardTemplate, profileUserId) => {
     return cardElement;
 }
 
-const loadCards = () => {
-    requestCardsInfo()
-        .then(cardsSet => {
-            cardsSet.forEach(cardContents => {
-                cardsContainer.prepend(createCard(cardContents, cardTemplate, profileName.dataset.userId))
-            });
-        })
-        .catch(err => console.log(err));
+const loadCards = (cardsSet) => {
+    cardsSet.forEach(cardContents => {
+        cardsContainer.prepend(createCard(cardContents, cardTemplate, profileName.dataset.userId))
+    });
 }
 
 

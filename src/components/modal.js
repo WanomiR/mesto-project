@@ -58,31 +58,15 @@ function submitFormProfile() {
     renderLoading(submitButtonProfile, true);
     patchUserInfo(inputName.value, inputDescription.value)
         .then(userInfo => {
+            closePopup(popupTypeProfile);
             profileName.textContent = userInfo.name;
             profileDescription.textContent = userInfo.about;
         })
         .catch(err => console.log(err))
         .finally(() => {
-            closePopup(popupTypeProfile);
             renderLoading(submitButtonProfile, false)
         });
 }
-
-const submitFormAvatar = () => {
-    renderLoading(submitButtonAvatar, true);
-    patchAvatar(avatarLink.value)
-        .then(userInfo => {
-            profileAvatar.src = userInfo.avatar;
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-            closePopup(popupTypeAvatar);
-            renderLoading(submitButtonAvatar, false);
-            formElementAvatar.reset();
-            disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
-        });
-}
-
 
 const updateProfileForm = () => {
     const inputList = Array.from([inputName, inputDescription]);
@@ -99,15 +83,31 @@ const updateProfileForm = () => {
 }
 
 
+const submitFormAvatar = () => {
+    renderLoading(submitButtonAvatar, true);
+    patchAvatar(avatarLink.value)
+        .then(userInfo => {
+            closePopup(popupTypeAvatar);
+            profileAvatar.src = userInfo.avatar;
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+            renderLoading(submitButtonAvatar, false);
+            formElementAvatar.reset();
+            disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
+    });
+}
+
+
 function submitFormCard() {
     renderLoading(submitButtonCard, true);
     postNewCard(placeName.value, imageLink.value)
         .then(cardContent => {
+            closePopup(popupTypeCard);
             cardsContainer.prepend(createCard(cardContent, cardTemplate, profileName.dataset.userId));
         })
         .catch(err => console.log(err))
         .finally(() => {
-            closePopup(popupTypeCard);
             renderLoading(submitButtonCard, false);
             formElementCard.reset();
             disableButton(submitButtonCard, selectorsSet.inactiveButtonClass);

@@ -1,8 +1,8 @@
 // ---------- Imports ------------ //
 
-import "./pages/index.css";
-import {enableValidation} from "./components/validate";
-import {loadCards} from "./components/cards";
+import "./index.css";
+import {enableValidation} from "../components/validate";
+import {loadCards} from "../components/cards";
 import {
     popupTypeProfile,
     popupTypeAvatar,
@@ -16,8 +16,9 @@ import {
     formElementCard,
     formElementProfile,
     formElementAvatar
-} from "./components/modal"
-import {selectorsSet, updateProfile} from "./components/utils";
+} from "../components/modal"
+import {selectorsSet, updateProfile} from "../components/utils";
+import {requestUserInfo, requestCardsInfo} from "../components/api"
 
 // ---------- Variables ---------- //
 
@@ -60,9 +61,16 @@ formElementProfile.addEventListener("submit", submitFormProfile);
 formElementAvatar.addEventListener("submit", submitFormAvatar);
 
 
-// ---------- Functions ---------- //
+// ---------- Initialization ---------- //
 
-updateProfile(); // load profile data
-loadCards();  // load cards from the server
+// update profile and load cards after getting user data
+Promise.all([requestUserInfo(), requestCardsInfo()])
+    .then(res => {
+        updateProfile(res[0]);
+        loadCards(res[1]);
+    })
+    .catch(err => console.log(`Error: ${err}`));
+
+
 enableValidation(selectorsSet); // enable forms validation
 

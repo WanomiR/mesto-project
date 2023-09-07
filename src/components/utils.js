@@ -29,16 +29,11 @@ const enableButton = (buttonElement, inactiveButtonClass) => {
     buttonElement.removeAttribute("disabled");
 }
 
-const updateProfile = () => {
-    requestUserInfo()
-        .then(res => {
-            profileName.textContent = res["name"];
-            profileName.dataset.userId = res["_id"];
-            profileDescription.textContent = res["about"];
-            profileAvatar.src = res["avatar"];
-
-        })
-        .catch(err => console.log(err));
+const updateProfile = (userData) => {
+    profileName.textContent = userData["name"];
+    profileName.dataset.userId = userData["_id"];
+    profileDescription.textContent = userData["about"];
+    profileAvatar.src = userData["avatar"];
 }
 
 const updateLikesCounter = (cardContent, likesCounter) => {
@@ -86,6 +81,7 @@ const getResponseData = (res) => {
         return res.json()
     }
 }
+
 
 // ---------- Exports ----------- //
 
