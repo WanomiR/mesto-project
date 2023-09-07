@@ -1,7 +1,7 @@
 // ---------- Variables ---------- //
 
 // selectors for enabling forms validation
-import {deleteLike, getUserInfo, putLike} from "./api";
+import {requestUserInfo} from "./api";
 import {profileAvatar, profileDescription, profileName} from "./modal.js";
 
 const selectorsSet = {
@@ -13,7 +13,6 @@ const selectorsSet = {
     errorClass: "form__input-error_active"
 }
 
-// object for storing user data
 
 // ---------- Functions ---------- //
 
@@ -27,9 +26,8 @@ const enableButton = (buttonElement, inactiveButtonClass) => {
     buttonElement.removeAttribute("disabled");
 }
 
-
 const updateProfile = () => {
-    getUserInfo()
+    requestUserInfo()
         .then(res => {
             profileName.textContent = res["name"];
             profileName.dataset.userId = res["_id"];
@@ -41,7 +39,7 @@ const updateProfile = () => {
 }
 
 const updateLikesCounter = (cardContent, likesCounter) => {
-    const nLikes = cardContent.likes.length;
+    const nLikes = cardContent["likes"].length;
     if (nLikes > 0) {
         likesCounter.classList.add("card__like-counter_active");
         likesCounter.textContent = nLikes;
@@ -52,9 +50,9 @@ const updateLikesCounter = (cardContent, likesCounter) => {
 }
 
 const hasMyLike = (cardContent, currUserId) => {
-    return cardContent.likes.some(userData => {
-        return userData._id === currUserId
-    })
+    return cardContent["likes"].some(userData => {
+        return userData["_id"] === currUserId;
+    });
 }
 
 const updateLikeButtonState = (likeButton, cardContent, likesCounter, currUserId) => {
@@ -63,12 +61,13 @@ const updateLikeButtonState = (likeButton, cardContent, likesCounter, currUserId
     } else {
         likeButton.classList.remove("card__like-button_active");
     }
-    updateLikesCounter(cardContent, likesCounter)
+    updateLikesCounter(cardContent, likesCounter);
 }
 
-const createdByMe = (cardContent, currUserId) => {
-    return cardContent.owner._id === currUserId
+const cardOwner = (cardContent, currUserId) => {
+    return cardContent["owner"]["_id"] === currUserId
 }
+
 
 // ---------- Exports ----------- //
 
@@ -80,5 +79,5 @@ export {
     updateLikesCounter,
     hasMyLike,
     updateLikeButtonState,
-    createdByMe
+    cardOwner
 }

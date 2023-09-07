@@ -11,7 +11,7 @@ const apiConfig = {
 
 // ---------- Functions ----------//
 
-const getInitialCards = () => {
+const requestCardsInfo = () => {
     return fetch(`${apiConfig.baseUrl}/cards`, {
         headers: apiConfig.headers,
     })
@@ -23,7 +23,7 @@ const getInitialCards = () => {
         });
 }
 
-const getUserInfo = () => {
+const requestUserInfo = () => {
     return fetch(`${apiConfig.baseUrl}/users/me`, {
         method: "GET",
         headers: apiConfig.headers,
@@ -36,7 +36,7 @@ const getUserInfo = () => {
         });
 }
 
-const patchUserInfo = (inputName, inputDescription) => {
+const patchUserInfo = (inputName, inputDescription, buttonElement) => {
     return fetch(`${apiConfig.baseUrl}/users/me`, {
         method: "PATCH",
         headers: apiConfig.headers,
@@ -47,6 +47,7 @@ const patchUserInfo = (inputName, inputDescription) => {
     })
         .then(res => {
             if (res.ok) {
+                buttonElement.textContent = "Cохранение..."
                 return res.json();
             }
             Promise.reject(`Error patching user info: ${res.status}`);
@@ -54,7 +55,7 @@ const patchUserInfo = (inputName, inputDescription) => {
 }
 
 
-const patchAvatar = (avatarLink) => {
+const patchAvatar = (avatarLink, buttonElement) => {
     return fetch(`${apiConfig.baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: apiConfig.headers,
@@ -64,6 +65,7 @@ const patchAvatar = (avatarLink) => {
     })
         .then(res => {
             if (res.ok) {
+                buttonElement.textContent = "Coхранение..."
                 return res.json();
             }
             Promise.reject(`Error patching user avatar: ${res.status}`);
@@ -71,7 +73,7 @@ const patchAvatar = (avatarLink) => {
 }
 
 
-const postNewCard = (placeName, imageLink) => {
+const postNewCard = (placeName, imageLink, buttonElement) => {
     return fetch(`${apiConfig.baseUrl}/cards`, {
         method: "POST",
         headers: apiConfig.headers,
@@ -81,7 +83,10 @@ const postNewCard = (placeName, imageLink) => {
         })
     })
         .then(res => {
-            if (res.ok) return res.json();
+            if (res.ok) {
+                buttonElement.textContent = "Сохранение..."
+                return res.json();
+            }
             Promise.reject(`Error posting new card: ${res.status}`);
         });
 }
@@ -111,7 +116,7 @@ const deleteLike = (cardId) => {
         });
 }
 
-const deleteCardRequest = (cardId) => {
+const requestCardDeletion = (cardId) => {
     return fetch(`${apiConfig.baseUrl}/cards/${cardId}`, {
         method: "DELETE",
         headers: apiConfig.headers
@@ -125,14 +130,14 @@ const deleteCardRequest = (cardId) => {
 // ---------- Exports ----------- //
 
 export {
-    getInitialCards,
-    getUserInfo,
+    requestCardsInfo,
+    requestUserInfo,
     patchUserInfo,
     patchAvatar,
     postNewCard,
     putLike,
     deleteLike,
-    deleteCardRequest
+    requestCardDeletion
 }
 
 

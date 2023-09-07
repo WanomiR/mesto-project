@@ -1,9 +1,9 @@
 // ---------- Imports ------------ //
 
-import {cardsContainer, cardTemplate, createCard} from "./cards.js"
-import {hideInputError} from "./validate.js";
-import {selectorsSet, disableButton, enableButton} from "./utils.js";
-import {patchAvatar, patchUserInfo, postNewCard} from "./api.js";
+import {cardsContainer, cardTemplate, createCard} from "./cards"
+import {hideInputError} from "./validate";
+import {selectorsSet, disableButton, enableButton} from "./utils";
+import {patchAvatar, patchUserInfo, postNewCard} from "./api";
 
 
 // ---------- Variables ---------- //
@@ -11,33 +11,33 @@ import {patchAvatar, patchUserInfo, postNewCard} from "./api.js";
 // popup elements
 const popupTypeImage = document.querySelector(".popup_type_image");
 const popupTypeProfile = document.querySelector(".popup_type_profile");
-const popupAvatar = document.querySelector(".popup_type_avatar");
+const popupTypeAvatar = document.querySelector(".popup_type_avatar");
 const popupTypeCard = document.querySelector(".popup_type_card");
+const popupTypeConfirmDelete = document.querySelector(".popup_type_confirm-delete");
 // profile elements
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const profileAvatar = document.querySelector(".profile__avatar");
+
 // form elements
 const forms = document.forms
-// profile form elements
 const formElementProfile = forms.userInfo;
 const inputName = formElementProfile.elements.userName;
 const inputDescription = formElementProfile.elements.userDescription;
 const submitButtonProfile = formElementProfile.elements.submitButton;
-// avatar form elements
 const formElementAvatar = forms.profileAvatar;
 const avatarLink = formElementAvatar.elements.avatarLink;
 const submitButtonAvatar = formElementAvatar.elements.submitButton;
-// add-card form elements
 const formElementCard = forms.card;
 const placeName = formElementCard.elements.placeName;
 const imageLink = formElementCard.elements.imageLink;
 const submitButtonCard = formElementCard.elements.submitButton;
+const formElementConfirmDelete = document.querySelector(".form_type_confirm-delete");
 
 
 // ---------- Functions ---------- //
 
-const closeByEscape = evt => {
+const closePopupByEscape = evt => {
     const popupElement = evt.currentTarget.querySelector(".popup_opened");
     if (evt.key === "Escape") {
         closePopup(popupElement);
@@ -46,18 +46,17 @@ const closeByEscape = evt => {
 
 const openPopup = popupElement => {
     popupElement.classList.add("popup_opened");
-    document.addEventListener("keyup", closeByEscape);
+    document.addEventListener("keyup", closePopupByEscape);
 }
 
 const closePopup = popupElement => {
     popupElement.classList.remove("popup_opened");
-    document.removeEventListener("keyup", closeByEscape);
+    document.removeEventListener("keyup", closePopupByEscape);
 }
 
 function submitFormProfile() {
-    patchUserInfo(inputName.value, inputDescription.value)
+    patchUserInfo(inputName.value, inputDescription.value, submitButtonProfile)
         .then(userInfo => {
-            submitButtonProfile.textContent = "Cохранение..."
             profileName.textContent = userInfo.name;
             profileDescription.textContent = userInfo.about;
         })
@@ -69,9 +68,8 @@ function submitFormProfile() {
 }
 
 const submitFormAvatar = () => {
-    patchAvatar(avatarLink.value)
+    patchAvatar(avatarLink.value, submitButtonAvatar)
         .then(userInfo => {
-            submitButtonAvatar.textContent = "Coхранение..."
             profileAvatar.src = userInfo.avatar;
         })
         .catch(err => console.log(err))
@@ -79,7 +77,7 @@ const submitFormAvatar = () => {
             submitButtonAvatar.textContent = "Сохранить";
         })
 
-    closePopup(popupAvatar);
+    closePopup(popupTypeAvatar);
     formElementAvatar.reset();
     disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
 }
@@ -101,10 +99,9 @@ const updateProfileForm = () => {
 
 
 function submitFormCard() {
-    postNewCard(placeName.value, imageLink.value)
+    postNewCard(placeName.value, imageLink.value, submitButtonCard)
         .then(cardContent => {
-            submitButtonCard.textContent = "Сохранение..."
-            cardsContainer.prepend(createCard(cardContent, cardTemplate, popupTypeImage, openPopup));
+            cardsContainer.prepend(createCard(cardContent, cardTemplate, profileName.dataset.userId));
         })
         .catch(err => console.log(err))
         .finally(() => {
@@ -121,19 +118,23 @@ function submitFormCard() {
 // ---------- Exports ----------- //
 
 export {
+    popupTypeProfile,
+    popupTypeAvatar,
+    popupTypeCard,
+    popupTypeImage,
+    popupTypeConfirmDelete,
+    openPopup,
+    closePopup,
+    profileName,
+    profileDescription,
+    profileAvatar,
+    forms,
     formElementCard,
     formElementProfile,
     formElementAvatar,
-    openPopup,
-    closePopup,
-    closeByEscape,
+    formElementConfirmDelete,
+    updateProfileForm,
     submitFormCard,
     submitFormProfile,
     submitFormAvatar,
-    popupTypeImage,
-    forms,
-    updateProfileForm,
-    profileName,
-    profileDescription,
-    profileAvatar
 }

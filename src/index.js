@@ -1,9 +1,12 @@
 // ---------- Imports ------------ //
 
 import "./pages/index.css";
-import {enableValidation} from "./components/validate.js";
-import {loadInitialCards} from "./components/cards.js";
+import {enableValidation} from "./components/validate";
+import {loadCards} from "./components/cards";
 import {
+    popupTypeProfile,
+    popupTypeAvatar,
+    popupTypeCard,
     openPopup,
     closePopup,
     submitFormCard,
@@ -13,17 +16,12 @@ import {
     formElementCard,
     formElementProfile,
     formElementAvatar
-} from "./components/modal.js"
-import {selectorsSet, updateProfile} from "./components/utils.js";
+} from "./components/modal"
+import {selectorsSet, updateProfile} from "./components/utils";
 
 // ---------- Variables ---------- //
 
-// popup elements
 const popupElementsList = Array.from(document.querySelectorAll(".popup"))
-const popupProfile = document.querySelector(".popup_type_profile");
-const popupCard = document.querySelector(".popup_type_card");
-const popupAvatar = document.querySelector(".popup_type_avatar");
-// profile elements
 const profileEditButton = document.querySelector(".profile__edit-button");
 const avatarEditButton = document.querySelector(".profile__edit-avatar-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -31,21 +29,21 @@ const addCardButton = document.querySelector(".profile__add-button");
 
 // ---------- Listeners ---------- //
 
-// open popups functionality
+// open popup functionality
 profileEditButton.addEventListener("click", () => {
     updateProfileForm();
-    openPopup(popupProfile);
+    openPopup(popupTypeProfile);
 });
 
 avatarEditButton.addEventListener("click", () => {
-    openPopup(popupAvatar);
+    openPopup(popupTypeAvatar);
 })
 
 addCardButton.addEventListener("click", () => {
-    openPopup(popupCard);
+    openPopup(popupTypeCard);
 });
 
-// close popups functionality
+// close popup functionality
 popupElementsList.forEach((popupElement) => {
     const closeButton = popupElement.querySelector(".popup__close-button");
     closeButton.addEventListener("click", () => {
@@ -56,19 +54,15 @@ popupElementsList.forEach((popupElement) => {
     });
 });
 
-// submit form listeners
+// submit forms
 formElementCard.addEventListener("submit", submitFormCard);
 formElementProfile.addEventListener("submit", submitFormProfile);
 formElementAvatar.addEventListener("submit", submitFormAvatar);
 
+
 // ---------- Functions ---------- //
 
-// load user info
-updateProfile();
-// load the initial set of cards
-loadInitialCards();
-// enable forms validation
-enableValidation(selectorsSet);
-// show page after everything is loaded
+updateProfile(); // load profile data
+loadCards();  // load cards from the server
+enableValidation(selectorsSet); // enable forms validation
 
-// ---------- Test Zone ---------- //
