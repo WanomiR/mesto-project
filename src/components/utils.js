@@ -1,9 +1,12 @@
-// ---------- Variables ---------- //
+// ---------- Imports ------------ //
 
-// selectors for enabling forms validation
 import {requestUserInfo} from "./api";
 import {profileAvatar, profileDescription, profileName} from "./modal.js";
 
+
+// ---------- Variables ---------- //
+
+// selectors for enabling forms validation
 const selectorsSet = {
     formSelector: ".form",
     inputSelector: ".form__input",
@@ -68,6 +71,21 @@ const cardOwner = (cardContent, currUserId) => {
     return cardContent["owner"]["_id"] === currUserId
 }
 
+const renderLoading = (buttonElement, isLoading) => {
+    if (isLoading) {
+        buttonElement.textContent = "Сохранение...";
+    } else {
+        buttonElement.textContent = "Сохранить";
+    }
+}
+
+const getResponseData = (res) => {
+    if (!res.ok) {
+        return Promise.reject(`Error: ${res.status}`);
+    } else {
+        return res.json()
+    }
+}
 
 // ---------- Exports ----------- //
 
@@ -79,5 +97,7 @@ export {
     updateLikesCounter,
     hasMyLike,
     updateLikeButtonState,
-    cardOwner
+    cardOwner,
+    renderLoading,
+    getResponseData
 }

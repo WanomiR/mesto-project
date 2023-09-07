@@ -61,14 +61,16 @@ const createCard = (cardContent, cardTemplate, profileUserId) => {
                     updateLikeButtonState(buttonElement, cardContentUpdated, likesCounter, profileUserId);
                     buttonElement.classList.add("card__like-button_active");
                     cardContent = cardContentUpdated;
-                });
+                })
+                .catch(err => console.log(`Error: ${err}`));
         } else {
             deleteLike(cardContent["_id"])
                 .then(cardContentUpdated => {
                     updateLikeButtonState(buttonElement, cardContentUpdated, likesCounter, profileUserId);
                     buttonElement.classList.remove("card__like-button_active");
                     cardContent = cardContentUpdated;
-                });
+                })
+                .catch(err => console.log(`Error: ${err}`));
         }
     });
 

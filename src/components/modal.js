@@ -2,7 +2,7 @@
 
 import {cardsContainer, cardTemplate, createCard} from "./cards"
 import {hideInputError} from "./validate";
-import {selectorsSet, disableButton, enableButton} from "./utils";
+import {selectorsSet, disableButton, enableButton, renderLoading} from "./utils";
 import {patchAvatar, patchUserInfo, postNewCard} from "./api";
 
 
@@ -55,31 +55,32 @@ const closePopup = popupElement => {
 }
 
 function submitFormProfile() {
-    patchUserInfo(inputName.value, inputDescription.value, submitButtonProfile)
+    renderLoading(submitButtonProfile, true);
+    patchUserInfo(inputName.value, inputDescription.value)
         .then(userInfo => {
             profileName.textContent = userInfo.name;
             profileDescription.textContent = userInfo.about;
         })
         .catch(err => console.log(err))
         .finally(() => {
-            submitButtonProfile.textContent = "Сохранить";
             closePopup(popupTypeProfile);
+            renderLoading(submitButtonProfile, false)
         });
 }
 
 const submitFormAvatar = () => {
-    patchAvatar(avatarLink.value, submitButtonAvatar)
+    renderLoading(submitButtonAvatar, true);
+    patchAvatar(avatarLink.value)
         .then(userInfo => {
             profileAvatar.src = userInfo.avatar;
         })
         .catch(err => console.log(err))
         .finally(() => {
-            submitButtonAvatar.textContent = "Сохранить";
-        })
-
-    closePopup(popupTypeAvatar);
-    formElementAvatar.reset();
-    disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
+            closePopup(popupTypeAvatar);
+            renderLoading(submitButtonAvatar, false);
+            formElementAvatar.reset();
+            disableButton(submitButtonAvatar, selectorsSet.inactiveButtonClass);
+        });
 }
 
 
@@ -99,19 +100,19 @@ const updateProfileForm = () => {
 
 
 function submitFormCard() {
-    postNewCard(placeName.value, imageLink.value, submitButtonCard)
+    renderLoading(submitButtonCard, true);
+    postNewCard(placeName.value, imageLink.value)
         .then(cardContent => {
             cardsContainer.prepend(createCard(cardContent, cardTemplate, profileName.dataset.userId));
         })
         .catch(err => console.log(err))
         .finally(() => {
-            submitButtonCard.textContent = "Сохранить";
+            closePopup(popupTypeCard);
+            renderLoading(submitButtonCard, false);
+            formElementCard.reset();
+            disableButton(submitButtonCard, selectorsSet.inactiveButtonClass);
         })
     
-    closePopup(popupTypeCard);
-    // clear the form inputs and update button state
-    formElementCard.reset()
-    disableButton(submitButtonCard, selectorsSet.inactiveButtonClass);
 }
 
 

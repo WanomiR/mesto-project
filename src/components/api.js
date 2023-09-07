@@ -1,3 +1,8 @@
+// ---------- Imports ------------ //
+
+import {getResponseData} from "./utils"
+
+
 // ---------- Variables ---------- //
 
 const apiConfig = {
@@ -15,12 +20,7 @@ const requestCardsInfo = () => {
     return fetch(`${apiConfig.baseUrl}/cards`, {
         headers: apiConfig.headers,
     })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            Promise.reject(`Error loading cards: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 const requestUserInfo = () => {
@@ -28,15 +28,10 @@ const requestUserInfo = () => {
         method: "GET",
         headers: apiConfig.headers,
     })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            Promise.reject(`Error loading user info: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
-const patchUserInfo = (inputName, inputDescription, buttonElement) => {
+const patchUserInfo = (inputName, inputDescription) => {
     return fetch(`${apiConfig.baseUrl}/users/me`, {
         method: "PATCH",
         headers: apiConfig.headers,
@@ -45,17 +40,11 @@ const patchUserInfo = (inputName, inputDescription, buttonElement) => {
             about: inputDescription
         })
     })
-        .then(res => {
-            if (res.ok) {
-                buttonElement.textContent = "Cохранение..."
-                return res.json();
-            }
-            Promise.reject(`Error patching user info: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 
-const patchAvatar = (avatarLink, buttonElement) => {
+const patchAvatar = (avatarLink) => {
     return fetch(`${apiConfig.baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: apiConfig.headers,
@@ -63,17 +52,11 @@ const patchAvatar = (avatarLink, buttonElement) => {
             avatar: avatarLink
         })
     })
-        .then(res => {
-            if (res.ok) {
-                buttonElement.textContent = "Coхранение..."
-                return res.json();
-            }
-            Promise.reject(`Error patching user avatar: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 
-const postNewCard = (placeName, imageLink, buttonElement) => {
+const postNewCard = (placeName, imageLink) => {
     return fetch(`${apiConfig.baseUrl}/cards`, {
         method: "POST",
         headers: apiConfig.headers,
@@ -82,16 +65,8 @@ const postNewCard = (placeName, imageLink, buttonElement) => {
             link: imageLink
         })
     })
-        .then(res => {
-            if (res.ok) {
-                buttonElement.textContent = "Сохранение..."
-                return res.json();
-            }
-            Promise.reject(`Error posting new card: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
-
-
 
 
 const putLike = (cardId) => {
@@ -99,10 +74,7 @@ const putLike = (cardId) => {
         method: "PUT",
         headers: apiConfig.headers
     })
-        .then(res => {
-            if (res.ok) return res.json()
-            Promise.reject(`Error putting like: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 const deleteLike = (cardId) => {
@@ -110,10 +82,7 @@ const deleteLike = (cardId) => {
         method: "DELETE",
         headers: apiConfig.headers
     })
-        .then(res => {
-            if (res.ok) return res.json()
-            Promise.reject(`Error deleting like: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 const requestCardDeletion = (cardId) => {
@@ -121,10 +90,7 @@ const requestCardDeletion = (cardId) => {
         method: "DELETE",
         headers: apiConfig.headers
     })
-        .then(res => {
-            if (res.ok) return res.json()
-            Promise.reject(`Error deleting card: ${res.status}`);
-        });
+        .then(res => getResponseData(res));
 }
 
 // ---------- Exports ----------- //
