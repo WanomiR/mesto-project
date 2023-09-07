@@ -31,10 +31,10 @@ const enableButton = (buttonElement, inactiveButtonClass) => {
 const updateProfile = () => {
     getUserInfo()
         .then(res => {
-            profileName.textContent = res.name;
-            profileName.dataset.userId = res._id;
-            profileDescription.textContent = res.about;
-            profileAvatar.src = res.avatar;
+            profileName.textContent = res["name"];
+            profileName.dataset.userId = res["_id"];
+            profileDescription.textContent = res["about"];
+            profileAvatar.src = res["avatar"];
 
         })
         .catch(err => console.log(err));
