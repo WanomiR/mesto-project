@@ -8,7 +8,7 @@ import {
     profileName,
     formElementConfirmDelete,
 } from "./modal";
-import {requestCardsInfo, putLike, deleteLike, requestCardDeletion} from "./api";
+import {requestCardsInfo, putLike, deleteLike, requestCardDeletion} from "./Api";
 import {hasMyLike, updateLikeButtonState, cardOwner,} from "./utils";
 
 

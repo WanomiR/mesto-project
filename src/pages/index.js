@@ -18,7 +18,7 @@ import {
     formElementAvatar
 } from "../components/modal"
 import {selectorsSet, updateProfile} from "../components/utils";
-import {requestUserInfo, requestCardsInfo} from "../components/api"
+import {requestUserInfo, requestCardsInfo} from "../components/Api"
 
 // ---------- Variables ---------- //
 

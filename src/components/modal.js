@@ -3,7 +3,7 @@
 import {cardsContainer, cardTemplate, createCard} from "./cards"
 import {hideInputError} from "./validate";
 import {selectorsSet, disableButton, enableButton, renderLoading} from "./utils";
-import {patchAvatar, patchUserInfo, postNewCard} from "./api";
+import {patchAvatar, patchUserInfo, postNewCard} from "./Api";
 
 
 // ---------- Variables ---------- //

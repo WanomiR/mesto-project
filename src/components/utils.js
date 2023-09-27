@@ -1,6 +1,6 @@
 // ---------- Imports ------------ //
 
-import {requestUserInfo} from "./api";
+import {requestUserInfo} from "./Api";
 import {profileAvatar, profileDescription, profileName} from "./modal.js";
 
 
