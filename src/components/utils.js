@@ -16,6 +16,8 @@ const selectorsSet = {
     errorClass: "form__input-error_active"
 }
 
+const ESC_KEY = "Escape";
+
 
 // ---------- Functions ---------- //
 
@@ -87,6 +89,7 @@ const getResponseData = (res) => {
 
 export {
     selectorsSet,
+    ESC_KEY,
     disableButton,
     enableButton,
     updateProfile,

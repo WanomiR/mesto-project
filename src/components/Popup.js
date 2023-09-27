@@ -8,7 +8,7 @@ export class Popup {
 
     /**
      * Создать попап.
-     * @param popupSelector {Object} - селектор попапа.
+     * @param popupSelector {String} - селектор попапа.
      */
     constructor(popupSelector) {
         this._popupElement = document.querySelector(popupSelector);
