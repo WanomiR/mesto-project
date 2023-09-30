@@ -3,7 +3,7 @@ import {ESC_KEY} from "./utils";
 /**
  * Базовый класс для работы с попапом.
  */
-export class Popup {
+export default class Popup {
     _popupElement;
 
     /**
