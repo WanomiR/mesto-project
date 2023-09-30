@@ -1,9 +1,9 @@
-import {Popup} from "./Popup";
+import Popup from "./Popup";
 
 /**
  * Обработка попапов с формами.
  */
-export class PopupWithForm extends Popup {
+export default class PopupWithForm extends Popup {
     _formElement;
     _handlerSubmitForm;
     _submitButton;

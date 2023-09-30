@@ -1,9 +1,9 @@
-import {Popup} from "./Popup";
+import Popup from "./Popup";
 
 /**
  * Обработка попапа для просмотра изображений.
  */
-export class PopupWithImage extends Popup{
+export default class PopupWithImage extends Popup{
     _imageElement;
     _descriptionElement;
 
