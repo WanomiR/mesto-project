@@ -22,6 +22,16 @@ export function generateCard({Card, cardContent, cardSelectors, api, popupImage,
         },
         handleDeleteCard: (card, cardId) => {
             handleDeleteCard(api, card, cardId);
+        },
+        putLike: (cardId, buttonElement, likesCounter) => {
+            api.putLike(cardId)
+                .then(res => card.updateLikeButton(buttonElement, likesCounter, res.likes))
+                .catch(err => console.log(err));
+        },
+        removeLike: (cardId, buttonElement, likesCounter) => {
+            api.deleteLike(cardId)
+                .then(res => card.updateLikeButton(buttonElement, likesCounter, res.likes))
+                .catch(err => console.log(err));
         }
     })
     return card.generate();

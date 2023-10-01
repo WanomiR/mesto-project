@@ -1,12 +1,15 @@
 export default class Card {
-    constructor({cardContent, cardSelectors, handleOpenPopup, handleDeleteCard, api, userId}) {
+    constructor({
+                    cardContent, cardSelectors, handleOpenPopup,
+                    handleDeleteCard, putLike, removeLike, userId
+                }) {
         this._content = cardContent;
         this._selectors = cardSelectors;
         this._handleDeleteCard = handleDeleteCard;
         this._handleOpenPopup = handleOpenPopup;
-        this._api = api;
+        this._putLike = putLike;
+        this._removeLike = removeLike;
         this._userId = userId;
-
     }
 
     generate() {
@@ -21,12 +24,26 @@ export default class Card {
         cardImage.src = this._content.link;
         cardImage.alt = `Фото: ${this._content.name}`
 
-        this._updateLikeButton(likeButton, likesCounter);
+        this.updateLikeButton(likeButton, likesCounter, this._content.likes);
         this._updateDeleteButton(deleteButton);
         this._setEventListeners(likeButton, likesCounter, deleteButton, cardImage);
 
         return this._cardElement;
     }
+
+    updateLikeButton(likeButton, ButtonElement, likes) {
+        if (this._content.likes !== likes) {
+            this._content.likes = likes;
+        }
+
+        if (this._hasUserLike()) {
+            likeButton.classList.add(this._selectors.likeButtonActive);
+        } else {
+            likeButton.classList.remove(this._selectors.likeButtonActive);
+        }
+        this._updateLikesCounter(ButtonElement)
+    }
+
 
     _getElement() {
         return document
@@ -51,21 +68,9 @@ export default class Card {
     _handleLikeButton(evt, likesCounter) {
         const buttonElement = evt.target;
         if (!this._hasUserLike()) {
-            this._api.putLike(this._content._id)
-                .then(res => {
-                    this._content.likes = res.likes
-                    this._updateLikeButton(buttonElement, likesCounter)
-                    buttonElement.classList.add(this._selectors.likeButtonActive)
-                })
-                .catch(err => console.log(`Error: ${err}`));
+            this._putLike(this._content._id, buttonElement, likesCounter)
         } else {
-            this._api.deleteLike(this._content._id)
-                .then(res => {
-                    this._content.likes = res.likes
-                    this._updateLikeButton(buttonElement, likesCounter)
-                    buttonElement.classList.remove(this._selectors.likeButtonActive)
-                })
-                .catch(err => console.log(`Error: ${err}`));
+            this._removeLike(this._content._id, buttonElement, likesCounter)
         }
     }
 
@@ -88,15 +93,6 @@ export default class Card {
             likesCounter.textContent = "";
             likesCounter.classList.remove(this._selectors.likesCounterActive);
         }
-    }
-
-    _updateLikeButton(likeButton, likesCounter) {
-        if (this._hasUserLike()) {
-            likeButton.classList.add(this._selectors.likeButtonActive);
-        } else {
-            likeButton.classList.remove(this._selectors.likeButtonActive);
-        }
-        this._updateLikesCounter(likesCounter)
     }
 
     _updateDeleteButton(deleteButton) {

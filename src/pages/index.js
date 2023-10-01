@@ -108,7 +108,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(res => {
         const [userData, cards] = res;
         profile.loadProfileData(userData) // load profile data
-        sessionStorage.setItem("id", userData._id)  // save user id
+        sessionStorage.setItem("id", userData._id)  // save current user id
         const cardList = new Section({ // render cards
             data: cards, renderer: (cardContent) => {
                 const cardElement = generateCard({
