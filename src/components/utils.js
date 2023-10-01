@@ -1,13 +1,28 @@
-// ---------- Functions ---------- //
+import PopupWithForm from "./PopupWithForm";
 
-const disableButton = (buttonElement, inactiveButtonClass) => {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", true);
+export function handleDeleteCard(api, card, cardId) {
+    const popupConfirmDelete = new PopupWithForm(".popup_type_confirm-delete", () => {
+        api.deleteCard(cardId)
+            .then(res => {
+                console.log(res.message);
+                card.remove();
+            })
+            .catch(err => console.log(err))
+        popupConfirmDelete.close();
+    })
+    popupConfirmDelete.setEventListeners();
+    popupConfirmDelete.open()
 }
 
-const enableButton = (buttonElement, inactiveButtonClass) => {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.removeAttribute("disabled");
+export function generateCard({Card, cardContent, cardSelectors, api, popupImage, userId}) {
+    const card = new Card({
+        cardContent, cardSelectors, api, userId,
+        handleOpenPopup: (placeName, imageLink) => {
+            popupImage.open(placeName, imageLink);
+        },
+        handleDeleteCard: (card, cardId) => {
+            handleDeleteCard(api, card, cardId);
+        }
+    })
+    return card.generate();
 }
-
-

@@ -13,7 +13,7 @@ export default class PopupWithForm extends Popup {
      * @param selectorPopup {String} - селектор попапа.
      * @param formSubmitCallback {Function} - колбэк сабмита формы.
      */
-    constructor({selectorPopup, formSubmitCallback}) {
+    constructor(selectorPopup, formSubmitCallback) {
         super(selectorPopup);
         this._handlerSubmitForm = formSubmitCallback;
         this._formElement = this._popupElement.querySelector("form");

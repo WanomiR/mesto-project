@@ -1,20 +1,21 @@
 export default class Card {
-    constructor({cardContent, cardSelectors, api, popupImage, popupConfirmDelete, userId}) {
+    constructor({cardContent, cardSelectors, handleOpenPopup, handleDeleteCard, api, userId}) {
         this._content = cardContent;
         this._selectors = cardSelectors;
+        this._handleDeleteCard = handleDeleteCard;
+        this._handleOpenPopup = handleOpenPopup;
         this._api = api;
-        this._popup = popupImage;
-        this._popupDelete = popupConfirmDelete;
         this._userId = userId;
+
     }
 
     generate() {
-        const cardElement = this._getElement();
-        const cardTitle = cardElement.querySelector(this._selectors.title);
-        const cardImage = cardElement.querySelector(this._selectors.image);
-        const likeButton = cardElement.querySelector(this._selectors.likeButton);
-        const likesCounter = cardElement.querySelector(this._selectors.likesCounter);
-        const deleteButton = cardElement.querySelector(this._selectors.deleteButton);
+        this._cardElement = this._getElement();
+        const cardTitle = this._cardElement.querySelector(this._selectors.title);
+        const cardImage = this._cardElement.querySelector(this._selectors.image);
+        const likeButton = this._cardElement.querySelector(this._selectors.likeButton);
+        const likesCounter = this._cardElement.querySelector(this._selectors.likesCounter);
+        const deleteButton = this._cardElement.querySelector(this._selectors.deleteButton);
 
         cardTitle.textContent = this._content.name;
         cardImage.src = this._content.link;
@@ -24,7 +25,7 @@ export default class Card {
         this._updateDeleteButton(deleteButton);
         this._setEventListeners(likeButton, likesCounter, deleteButton, cardImage);
 
-        return cardElement;
+        return this._cardElement;
     }
 
     _getElement() {
@@ -40,11 +41,10 @@ export default class Card {
             this._handleLikeButton(evt, likesCounter);
         })
         deleteButton.addEventListener("click", (evt) => {
-            this._popupDelete.setEventListeners(evt.target, this._content._id)
-            this._popupDelete.open();
+            this._handleDeleteCard(this._cardElement, this._content._id)
         })
         cardImage.addEventListener("click", () => {
-            this._popup.open(this._content.name, this._content.link);
+            this._handleOpenPopup(this._content.name, this._content.link)
         })
     }
 
