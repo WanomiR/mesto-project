@@ -1,3 +1,5 @@
+// ---------- Imports ---------- //
+
 import "./index.css";
 import {
     apiConfig,
@@ -19,23 +21,23 @@ import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
-
 import {generateCard} from "../components/utils";
 
-// create class instances
+
+// ---------- Classes initialization ---------- //
+
 const api = new Api(apiConfig)
 const profile = new UserInfo(userSelectors, api)
 const popupImage = new PopupWithImage(".popup_type_image");
 
-const popupCard = new PopupWithForm(".popup_type_card", async (data) => {
+const popupCard = new PopupWithForm(".popup_type_card", (data) => {
     // submit form callback
-    const userData = await profile.getUserInfo();
     popupCard.renderLoading(true)
     api.postCard(data)
         .then(cardContent => {
             popupCard.close()
             const cardElement = generateCard({
-                Card, cardContent, cardSelectors, api, popupImage, userId: userData._id
+                Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
             })
             cardsGrid.prepend(cardElement);
         })
@@ -55,10 +57,8 @@ const popupAvatar = new PopupWithForm(".popup_type_avatar", ({avatarLink}) => {
 });
 
 
-// load profile data
-profile.loadProfileData();
+// ---------- Event listeners ---------- //
 
-// set event listeners
 popupImage.setEventListeners();
 popupCard.setEventListeners()
 popupProfile.setEventListeners()
@@ -80,20 +80,21 @@ buttonEditProfile.addEventListener("click", async () => {
 })
 
 
-// enable validation
+// ---------- Enable validation ---------- //
+
 Array.from(document.forms).forEach(formElement => {
     const validator = new FormValidator(formSelectors, formElement);
     validator.enableValidation();
 })
 
 
-// load user info and render cards
-Promise.all([profile.getUserInfo(), api.getInitialCards()])
+// ---------- Load user info and render cards ---------- //
+
+Promise.all([profile.loadProfileData(), api.getInitialCards()])
     .then(res => {
-        const [userData, cards] = res;
-        const cardList = new Section({data: cards, renderer: (cardContent) => {
+        const cardList = new Section({data: res[1], renderer: (cardContent) => {
                 const cardElement = generateCard({
-                    Card, cardContent, cardSelectors, api, popupImage, userId: userData._id
+                    Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
                 })
                 cardList.addItem(cardElement);
             }}, '.places__grid')

@@ -26,14 +26,10 @@ export default class PopupWithForm extends Popup {
      * @private
      */
     _getInputValues() {
-        const inputsArray = Array.from(this._popupElement.querySelectorAll(".popup__input"));
-        const formValues = {};
-
-        inputsArray.forEach(input => {
-            formValues[input.name] = input.value;
-        });
-
-        return formValues;
+        const inputsList = this._formElement.querySelectorAll(".form__input");
+        const inputValues = {};
+        inputsList.forEach(input => inputValues[input.name] = input.value);
+        return inputValues
     }
 
     /**
@@ -41,7 +37,7 @@ export default class PopupWithForm extends Popup {
      */
     close() {
         super.close();
-        this._formElement.reset();
+        setTimeout(() => this._formElement.reset(), 1000)
     }
 
     /**

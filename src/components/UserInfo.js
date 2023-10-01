@@ -12,6 +12,7 @@ export default class UserInfo {
                 this._nameElement.textContent = res.name;
                 this._aboutElement.textContent = res.about;
                 this._avatarElement.src = res.avatar;
+                sessionStorage.setItem("id", res._id);
             })
             .catch(err => console.log(err));
     }
