@@ -27,7 +27,7 @@ import {generateCard} from "../components/utils";
 // ---------- Classes initialization ---------- //
 
 const api = new Api(apiConfig)
-const profile = new UserInfo(userSelectors, api)
+const profile = new UserInfo(userSelectors)
 const popupImage = new PopupWithImage(".popup_type_image");
 
 const popupCard = new PopupWithForm(".popup_type_card", (data) => {
@@ -49,11 +49,25 @@ const popupCard = new PopupWithForm(".popup_type_card", (data) => {
 });
 
 const popupProfile = new PopupWithForm(".popup_type_profile", (data) => {
-    profile.setUserInfo(data, popupProfile);
+    popupProfile.renderLoading(true);
+    api.patchUserInfo(data)
+        .then(res => profile.setUserInfo(res.name, res.about))
+        .catch(err => console.log(err))
+        .finally(() => {
+            popupProfile.renderLoading(false);
+            popupProfile.close();
+        });
 });
 
 const popupAvatar = new PopupWithForm(".popup_type_avatar", ({avatarLink}) => {
-    profile.setUserAvatar(avatarLink, popupAvatar);
+    popupAvatar.renderLoading(true);
+    api.patchUserAvatar(avatarLink)
+        .then(res => profile.setUserAvatar(res.avatar))
+        .catch(err => console.log(err))
+        .finally(() => {
+            popupAvatar.renderLoading(false);
+            popupAvatar.close();
+        });
 });
 
 
@@ -70,8 +84,8 @@ buttonAddCard.addEventListener("click", () => {
 buttonEditAvatar.addEventListener("click", () => {
     popupAvatar.open();
 })
-buttonEditProfile.addEventListener("click", async () => {
-    const {name, about} = await profile.getUserInfo();
+buttonEditProfile.addEventListener("click", () => {
+    const {name, about} = profile.getUserInfo();
     const validator = new FormValidator(formSelectors, profileForm)
     userName.value = name;
     userDescription.value = about;
@@ -90,14 +104,20 @@ Array.from(document.forms).forEach(formElement => {
 
 // ---------- Load user info and render cards ---------- //
 
-Promise.all([profile.loadProfileData(), api.getInitialCards()])
+Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(res => {
-        const cardList = new Section({data: res[1], renderer: (cardContent) => {
+        const [userData, cards] = res;
+        profile.loadProfileData(userData) // load profile data
+        sessionStorage.setItem("id", userData._id)  // save user id
+        const cardList = new Section({ // render cards
+            data: cards, renderer: (cardContent) => {
                 const cardElement = generateCard({
                     Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
                 })
                 cardList.addItem(cardElement);
-            }}, '.places__grid')
+            }
+        }, '.places__grid')
         cardList.renderItems();
     })
     .catch(err => console.log(err))
+

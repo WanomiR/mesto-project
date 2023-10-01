@@ -1,52 +1,30 @@
 export default class UserInfo {
-    constructor({nameSelector, aboutSelector, avatarSelector}, api) {
+    constructor({nameSelector, aboutSelector, avatarSelector}) {
         this._nameElement = document.querySelector(nameSelector);
         this._aboutElement = document.querySelector(aboutSelector);
         this._avatarElement = document.querySelector(avatarSelector);
-        this._api = api;
     }
 
-    loadProfileData() {
-        this._api.getUserInfo()
-            .then(res => {
-                this._nameElement.textContent = res.name;
-                this._aboutElement.textContent = res.about;
-                this._avatarElement.src = res.avatar;
-                sessionStorage.setItem("id", res._id);
-            })
-            .catch(err => console.log(err));
+    loadProfileData({name, about, avatar}) {
+        this._nameElement.textContent = name;
+        this._aboutElement.textContent = about;
+        this._avatarElement.src = avatar;
     }
 
     getUserInfo() {
-        return this._api.getUserInfo()
-            .then(res => res)
-            .catch(err => console.log(err))
+        return {
+            name: this._nameElement.textContent,
+            about: this._aboutElement.textContent
+        }
     }
 
-    setUserInfo(userData, popup) {
-        popup.renderLoading(true)
-        this._api.patchUserInfo(userData)
-            .then(res => {
-                this._nameElement.textContent = res.name;
-                this._aboutElement.textContent = res.about;
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                popup.renderLoading(false)
-                popup.close()
-            })
+    setUserInfo(name, about) {
+        this._nameElement.textContent = name;
+        this._aboutElement.textContent = about;
     }
 
-    setUserAvatar(imageLink, popup) {
-        popup.renderLoading(true)
-        this._api.patchUserAvatar(imageLink)
-            .then(res => {
-                this._avatarElement.src = res.avatar;
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                popup.renderLoading(false);
-                popup.close();
-        })
+    setUserAvatar(imageLink) {
+        this._avatarElement.src = imageLink;
     }
 }
+
