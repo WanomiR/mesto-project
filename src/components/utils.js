@@ -7,11 +7,11 @@ export function handleDeleteCard(api, card, cardId) {
                 console.log(res.message);
                 card.remove();
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
         popupConfirmDelete.close();
     })
     popupConfirmDelete.setEventListeners();
-    popupConfirmDelete.open()
+    popupConfirmDelete.open();
 }
 
 export function generateCard({Card, cardContent, cardSelectors, api, popupImage, userId}) {

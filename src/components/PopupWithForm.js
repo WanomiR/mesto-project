@@ -31,13 +31,28 @@ export default class PopupWithForm extends Popup {
         inputsList.forEach(input => inputValues[input.name] = input.value);
         return inputValues
     }
+    _clearErrorFields() {
+        const errorElements = Array.from(this._formElement.querySelectorAll(".form__input-error"));
+        const inputElements = Array.from(this._formElement.querySelectorAll(".form__input_type_error"));
 
+        errorElements.forEach(errorField => {
+            errorField.classList.remove("popup__input-error_visible");
+            errorField.textContent = "";
+        });
+
+        inputElements.forEach(input => {
+            input.classList.remove("form__input_type_error");
+        })
+    }
     /**
      * Закрытие попапа как в родителе, но с очищением полей.
      */
     close() {
         super.close();
-        setTimeout(() => this._formElement.reset(), 1000)
+        setTimeout(() => {
+            this._formElement.reset();
+            this._clearErrorFields();
+        }, 1000);
     }
 
     /**

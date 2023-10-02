@@ -1,63 +1,102 @@
+/**
+ * Установка и запуск валидации.
+ */
 export default class FormValidator {
+    /**
+     * Создание.
+     * @param formSelectors {Object} - объект с селекторами форм.
+     * @param formElement {Object} - элемент формы.
+     */
     constructor(formSelectors, formElement) {
         this._selectors = formSelectors;
         this._form = formElement;
     }
 
-    _showInputError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
-        const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.add(inputErrorClass);
+    /**
+     * Отрисовка текста ошибки.
+     * @param inputElement {Object} - элемент ввода, для которого отрисовываем ошибку.
+     * @param errorMessage {String} - текст ошибки.
+     * @private
+     */
+    _showInputError(inputElement, errorMessage) {
+        const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+        inputElement.classList.add(this._selectors.inputErrorClass);
         errorElement.textContent = errorMessage;
-        errorElement.classList.add(errorClass);
+        errorElement.classList.add(this._selectors.errorClass);
     }
 
-    _hideInputError(formElement, inputElement, inputErrorClass, errorClass) {
-        const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.remove(inputErrorClass);
-        errorElement.classList.remove(errorClass);
+    /**
+     * Скрыть поле с текстом ошибки.
+     * @param inputElement {Object} - элемент ввода, для которого убираем текст.
+     * @private
+     */
+    _hideInputError(inputElement) {
+        const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+        inputElement.classList.remove(this._selectors.inputErrorClass);
+        errorElement.classList.remove(this._selectors.errorClass);
         errorElement.textContent = "";
     }
 
-
-    _checkInputValidity(formElement, inputElement, inputErrorClass, errorClass) {
+    /**
+     * Проверка валидности введенного значения в поле и отрисовка ошибки.
+     * @param inputElement {Object} - проверяемое поле ввода.
+     * @private
+     */
+    _checkInputValidity(inputElement) {
         if (inputElement.validity.patternMismatch) {
             inputElement.setCustomValidity(inputElement.dataset.errorMessage);
         } else {
-            inputElement.setCustomValidity("")
+            inputElement.setCustomValidity("");
         }
 
         if (!inputElement.validity.valid) {
-            this._showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
+            this._showInputError(inputElement, inputElement.validationMessage);
         } else {
-            this._hideInputError(formElement, inputElement, inputErrorClass, errorClass);
+            this._hideInputError(inputElement);
         }
     }
 
+    /**
+     * Проверка формы на наличие хоть одного невалидного поля.
+     * @param inputList {Object} - список полей.
+     * @returns {boolean} - true если есть хоть одно.
+     * @private
+     */
     _hasInvalidInput(inputList) {
         return inputList.some(inputElement => !inputElement.validity.valid);
     }
 
-    _disableButton(buttonElement, inactiveButtonClass) {
-        buttonElement.classList.add(inactiveButtonClass);
+    /**
+     * Отключение кнопки подтверждения при невалидных полях.
+     * @param buttonElement {Object} - кнопка подтверждения формы.
+     * @private
+     */
+    _disableButton(buttonElement) {
+        buttonElement.classList.add(this._selectors.inactiveButtonClass);
         buttonElement.setAttribute("disabled", true);
     }
 
-    _enableButton(buttonElement, inactiveButtonClass) {
-        buttonElement.classList.remove(inactiveButtonClass);
+    /**
+     * Включение кнопки подтверждения при валидных полях.
+     * @param buttonElement {Object} - кнопка подтверждения формы.
+     * @private
+     */
+    _enableButton(buttonElement) {
+        buttonElement.classList.remove(this._selectors.inactiveButtonClass);
         buttonElement.removeAttribute("disabled");
     }
 
-    _toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
+    /**
+     * Проверка и переключение состояния кнопки.
+     * @param inputList {Object} - список полей ввода формы.
+     * @param buttonElement {Object} - кнопка подтверждения формы.
+     * @private
+     */
+    _toggleButtonState (inputList, buttonElement) {
         if (this._hasInvalidInput(inputList)) {
-            this._disableButton(buttonElement, inactiveButtonClass);
+            this._disableButton(buttonElement);
         } else {
-            this._enableButton(buttonElement, inactiveButtonClass);
-        }
-    }
-
-    _handleEscClose(evt) {
-        if (evt.key === "Escape") {
-            document.querySelector(".popup_opened").classList.remove("popup_opened")
+            this._enableButton(buttonElement);
         }
     }
 
@@ -65,14 +104,14 @@ export default class FormValidator {
         const inputList = Array.from(this._form.querySelectorAll(this._selectors.inputSelector));
         const buttonElement = this._form.querySelector(this._selectors.submitButtonSelector);
 
-        this._toggleButtonState(inputList, buttonElement, this._selectors.inactiveButtonClass);
-        inputList.forEach((inputElement) => {
-            this._hideInputError(this._form, inputElement, this._selectors.inputErrorClass, this._selectors.errorClass);
+        this._toggleButtonState(inputList, buttonElement);
+        inputList.forEach(inputElement => {
+            this._hideInputError(inputElement);
+
             inputElement.addEventListener("input", () => {
-                this._checkInputValidity(this._form, inputElement, this._selectors.inputErrorClass, this._selectors.errorClass);
-                this._toggleButtonState(inputList, buttonElement, this._selectors.inactiveButtonClass);
+                this._checkInputValidity(inputElement);
+                this._toggleButtonState(inputList, buttonElement);
             });
-            inputElement.addEventListener("keyup", this._handleEscClose)
         });
     }
 }

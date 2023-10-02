@@ -6,7 +6,7 @@ const apiConfig = {
         authorization: "ae8892c5-a1e1-40d3-aba9-31eb2dd98185",
         "Content-Type": "application/json"
     }
-}
+};
 
 // Form
 const formSelectors = {
@@ -16,7 +16,7 @@ const formSelectors = {
     inactiveButtonClass: "form__submit-button_disabled",
     inputErrorClass: "form__input_type_error",
     errorClass: "form__input-error_active",
-}
+};
 
 // Card
 const cardSelectors = {
@@ -30,21 +30,21 @@ const cardSelectors = {
     likesCounterActive: "card__like-counter_active",
     deleteButton: ".card__delete-button",
     deleteButtonActive: "card__delete-button_active",
-}
+};
 
 const userSelectors = {
     nameSelector: ".profile__title",
     aboutSelector: ".profile__subtitle",
     avatarSelector: ".profile__avatar"
-}
+};
 
 const cardsGrid = document.querySelector(".places__grid");
 const buttonAddCard = document.querySelector(".profile__add-button");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonEditAvatar = document.querySelector(".profile__edit-avatar-button");
 
-const profileForm = document.forms.userInfo
-const {userName, userDescription} = profileForm.elements
+const profileForm = document.forms.userInfo;
+const {userName, userDescription} = profileForm.elements;
 
 export {
     apiConfig,
@@ -58,4 +58,4 @@ export {
     profileForm,
     userName,
     userDescription
-}
+};

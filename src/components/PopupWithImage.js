@@ -26,11 +26,11 @@ export default class PopupWithImage extends Popup{
         new Promise((resolve, reject) => {
             this._descriptionElement.textContent = placeName;
             this._imageElement.src = imageLink;
-            this._imageElement.alt = `Фото: ${placeName}`
+            this._imageElement.alt = `Фото: ${placeName}`;
             this._imageElement.onload = resolve;
             this._imageElement.onerror = reject;
         })
             .then(() => super.open())
-            .catch(err => console.log(`Error opening popup image: ${err}`))
+            .catch(err => console.log(`Error opening popup image: ${err}`));
     }
 }
