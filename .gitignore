@@ -1,7 +1,7 @@
-./.idea
-/*.zip
-/*.fig
-./*.jpg
+.DS_Store
+.vscdoe
+.idea
 
 node_modules
 dist
+
