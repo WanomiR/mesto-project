@@ -1,24 +1,37 @@
 {
-  "name": "webpack",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./src/components/index.js",
+  "name": "mesto-project",
+  "version": "3.0.1",
+  "description": "Interactive web page with real time forms validation.",
+  "main": "src/pages/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WanomiR/mesto-project.git"
+  },
+  "keywords": [
+    "validation",
+    "webpack"
+  ],
+  "author": "WanomiR",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WanomiR/mesto-project/issues"
+  },
+  "homepage": "https://github.com/WanomiR/mesto-project#readme",
   "devDependencies": {
-    "@babel/core": "^7.22.10",
-    "@babel/preset-env": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.14",
     "autoprefixer": "^10.4.15",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^9.1.3",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.8.1",
     "cssnano": "^6.0.1",
-    "eslint-webpack-plugin": "^4.0.1",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
@@ -27,7 +40,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@babel/eslint-parser": "^7.22.10",
-    "core-js": "^3.32.0"
+    "core-js": "^3.32.1"
   }
 }

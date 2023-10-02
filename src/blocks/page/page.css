@@ -1,17 +1,14 @@
 .page {
-  padding: 0;
-  margin: 0;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: minmax(min-content, max-content) 1fr minmax(min-content, max-content);
-  background-color: var(--background-color-main);
-  font-family: Inter, sans-serif;
-  position: relative;
-}
-
-@media screen and (max-width: 320px){
-  .page {
-    max-width: 320px;
-  }
+  background-color: #000;
+  color: #fff;
+  margin: 0 auto;
+  max-width: 1280px;
+  min-width: 320px;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adust: 100%;
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
 }

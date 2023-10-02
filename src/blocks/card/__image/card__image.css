@@ -1,7 +1,8 @@
 .card__image {
   width: 282px;
   height: 282px;
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
+  display: block;
   object-fit: cover;
+  object-position: center;
+  cursor: pointer;
 }
