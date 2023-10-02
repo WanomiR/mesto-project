@@ -1,79 +1,94 @@
-export default class Api {
-    constructor(config) {
-        this._baseUrl = config.baseUrl;
-        this._headers = config.headers;
-    }
+import {apiConf} from "./config";
+import {checkResponse} from "./utils";
 
-    _handleResponse(res) {
-        if (!res.ok) {
-            return Promise.reject(`Error: ${res.status}`);
-        } else {
-            return res.json();
+
+export const getPersonalInfo = () => {
+    return fetch(`${apiConf.url}/${apiConf.groupId}/users/me`, {
+        method: "GET",
+        headers: {
+            authorization: apiConf.token,
+            "Content-Type": "application/json"
         }
-    }
-    getInitialCards() {
-        return fetch(`${this._baseUrl}/cards`, {
-            headers: this._headers,
-        })
-            .then(res => this._handleResponse(res));
-    }
+    }).then(checkResponse);
+};
 
-    getUserInfo() {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: "GET",
-            headers: this._headers,
-        })
-            .then(res => this._handleResponse(res));
-    }
+export const getCards = () => {
+    return fetch(`${apiConf.url}/${apiConf.groupId}/cards`, {
+        method: "GET",
+        headers: {
+            authorization: apiConf.token,
+            "Content-Type": "application/json"
+        }
+    }).then(checkResponse);
+};
 
-    patchUserInfo({userName, userDescription}) {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: "PATCH",
-            headers: this._headers,
-            body: JSON.stringify({name: userName, about: userDescription})
+export const updatePersonalInfo = (name, about) => {
+    return fetch(`${apiConf.url}/${apiConf.groupId}/users/me`, {
+        method: "PATCH",
+        headers: {
+            authorization: apiConf.token,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            about: about
         })
-            .then(res => this._handleResponse(res));
-    }
+    }).then(checkResponse);
+};
 
-    patchUserAvatar(imageLink) {
-        return fetch(`${this._baseUrl}/users/me/avatar`, {
-            method: "PATCH",
-            headers: this._headers,
-            body: JSON.stringify({avatar: imageLink}),
+export const postNewCard = (name, link) => {
+    return fetch(`${apiConf.url}/${apiConf.groupId}/cards`, {
+        method: "POST",
+        headers: {
+            authorization: apiConf.token,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            link: link
         })
-            .then(res => this._handleResponse(res));
-    }
+    }).then(checkResponse);
+};
 
-    postCard({placeName, imageLink}) {
-        return fetch(`${this._baseUrl}/cards`, {
-            method: "POST",
-            headers: this._headers,
-            body: JSON.stringify({name: placeName, link: imageLink}),
-        })
-            .then(res => this._handleResponse(res));
+export const deleteCard = (cardId) => {
+  return fetch(`${apiConf.url}/${apiConf.groupId}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      authorization: apiConf.token,
+      "Content-Type": "application/json"
     }
+  }).then(checkResponse);
+};
 
-    deleteCard(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}`, {
-            method: "DELETE",
-            headers: this._headers,
-        })
-            .then(res => this._handleResponse(res));
+export const putLikeOnCard = (cardId) => {
+  return fetch(`${apiConf.url}/${apiConf.groupId}/cards//likes/${cardId}`, {
+    method: "PUT",
+    headers: {
+      authorization: apiConf.token,
+      "Content-Type": "application/json"
     }
+  }).then(checkResponse);
+};
 
-    putLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-            method: "PUT",
-            headers: this._headers,
-        })
-            .then(res => this._handleResponse(res));
+export const deleteLikeOnCard = (cardId) => {
+  return fetch(`${apiConf.url}/${apiConf.groupId}/cards//likes/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      authorization: apiConf.token,
+      "Content-Type": "application/json"
     }
+  }).then(checkResponse);
+};
 
-    deleteLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-            method: "DELETE",
-            headers: this._headers,
-        })
-            .then(res => this._handleResponse(res));
-    }
-}
+export const updateAvatar = (url) => {
+  return fetch(`${apiConf.url}/${apiConf.groupId}/users/me/avatar`, {
+    method: "PATCH",
+    headers: {
+      authorization: apiConf.token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      avatar: url
+    })
+  }).then(checkResponse);
+};

@@ -1,0 +1,12 @@
+.page__main {
+  max-width: 880px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 67px;
+}
+
+@media screen and (max-width: 320px){
+  .page__main {
+    margin-bottom: 48px;
+  }
+}

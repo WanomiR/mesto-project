@@ -1,169 +1,142 @@
+import {
+  addingClassToOpenPopup
+} from "./modal";
+import {alertError, handlerSubmitDeleteCard, showLoadingOnBtn} from "./utils";
+import {deleteLikeOnCard, putLikeOnCard} from "./api";
+
+/*Попап для просмотра изображения и его элементы*/
+export const viewImagePopupElement = document.querySelector("#imageViewerPopup");
+const imagePopupElement = viewImagePopupElement.querySelector(".popup__image");
+const descriptionPopupElement = viewImagePopupElement.querySelector(".popup__image-description");
+export const deleteCardPopupElement = document.querySelector("#confirmDeleteCard");
+const submitDeletingCardBtn = deleteCardPopupElement.querySelector(".popup__submit-btn");
+
 /**
- * Создание и работа карточки
+ * Функция для возможности ставить лайк карточке.
+ * @param card {Element} - элемент карточки, на которую надо добавить событие.
  */
-export default class Card {
-    /**
-     * Создать карточку.
-     * @param cardContent {Object} - данные карточки с сервера.
-     * @param cardSelectors {Object} - объект с селекторами.
-     * @param handleOpenPopup {Function} - обработчик открытия попапа.
-     * @param handleDeleteCard {Function} - обработчик удаления карточки.
-     * @param putLike {Function} - отправка установки лайка на сервер.
-     * @param removeLike {Function} - отправка удаления лайка на сервер.
-     * @param userId {String} - ID пользователя.
-     */
-    constructor({
-                    cardContent,
-                    cardSelectors,
-                    handleOpenPopup,
-                    handleDeleteCard,
-                    putLike,
-                    removeLike,
-                    userId
-                }) {
-        this._content = cardContent;
-        this._selectors = cardSelectors;
-        this._handleDeleteCard = handleDeleteCard;
-        this._handleOpenPopup = handleOpenPopup;
-        this._putLike = putLike;
-        this._removeLike = removeLike;
-        this._userId = userId;
-    }
+function addEventToLikeCard(card) {
+  const likeBtn = card.querySelector(".card__like-btn");
+  const likeCounter = card.querySelector(".card__like-counter");
 
-    /**
-     * Сборка карточки.
-     * @returns {Object} - готовая к вставке наполненная карточка.
-     */
-    generate() {
-        this._cardElement = this._getElement();
-        const cardTitle = this._cardElement.querySelector(this._selectors.title);
-        const cardImage = this._cardElement.querySelector(this._selectors.image);
-        const likeButton = this._cardElement.querySelector(this._selectors.likeButton);
-        const likesCounter = this._cardElement.querySelector(this._selectors.likesCounter);
-        const deleteButton = this._cardElement.querySelector(this._selectors.deleteButton);
-
-        cardTitle.textContent = this._content.name;
-        cardImage.src = this._content.link;
-        cardImage.alt = `Фото: ${this._content.name}`;
-
-        this.updateLikeButton(likeButton, likesCounter, this._content.likes);
-        this._updateDeleteButton(deleteButton);
-        this._setEventListeners(likeButton, likesCounter, deleteButton, cardImage);
-
-        return this._cardElement;
-    }
-
-    /**
-     * Обновление состояния кнопки лайка.
-     * @param likeButton {Object} - кнопка лайка.
-     * @param counterElement {Object} - счетчик лайков.
-     * @param likes {Array} - массив лайков карточки с сервера.
-     */
-    updateLikeButton(likeButton, counterElement, likes) {
-        if (this._content.likes !== likes) {
-            this._content.likes = likes;
-        }
-
-        if (this._hasUserLike()) {
-            likeButton.classList.add(this._selectors.likeButtonActive);
-        } else {
-            likeButton.classList.remove(this._selectors.likeButtonActive);
-        }
-        this._updateLikesCounter(counterElement);
-    }
-
-    /**
-     * Получить элемент карточки из шаблона.
-     * @returns {Node} - готовая к обработке карточка.
-     * @private
-     */
-    _getElement() {
-        return document
-            .querySelector(this._selectors.templateSelector)
-            .content
-            .querySelector(this._selectors.cardElement)
-            .cloneNode(true);
-    }
-
-    /**
-     * Установка слушателей на карточку.
-     * @param likeButton {Element} - кнопка лайка.
-     * @param likesCounter {Element} - счетчик лайков.
-     * @param deleteButton {Element} - кнопка удаления карточки.
-     * @param cardImage {Element} - изображение карточки.
-     * @private
-     */
-    _setEventListeners(likeButton, likesCounter, deleteButton, cardImage) {
-        likeButton.addEventListener("click", evt => {
-            this._handleLikeButton(evt, likesCounter);
+  likeBtn.addEventListener("click", () => {
+    if (likeBtn.classList.contains("card__like-btn_active")) {
+      deleteLikeOnCard(card.dataset.id)
+        .then(res => {
+          likeCounter.textContent = res.likes.length;
+          likeBtn.classList.toggle("card__like-btn_active");
         })
-        deleteButton.addEventListener("click", () => {
-            this._handleDeleteCard(this._cardElement, this._content._id);
+        .catch(alertError);
+    } else {
+      putLikeOnCard(card.dataset.id)
+        .then(res => {
+          likeCounter.textContent = res.likes.length;
+          likeBtn.classList.toggle("card__like-btn_active");
         })
-        cardImage.addEventListener("click", () => {
-            this._handleOpenPopup(this._content.name, this._content.link);
-        })
+        .catch(alertError);
     }
+  });
+}
 
-    /**
-     * Отправка информации об установке или удалении лайка на карточке.
-     * @param evt {Object} - объект события слушателя.
-     * @param likesCounter {Element} - счетчик лайков.
-     * @private
-     */
-    _handleLikeButton(evt, likesCounter) {
-        const buttonElement = evt.target;
-        if (!this._hasUserLike()) {
-            this._putLike(this._content._id, buttonElement, likesCounter);
-        } else {
-            this._removeLike(this._content._id, buttonElement, likesCounter);
-        }
-    }
+/**
+ * Функция позволяет удалить карточку из галереи
+ * @param card {Element} - элемент карточки, на которую надо добавить событие.
+ */
+function addEventToDeleteCard(card) {
+  const deleteBtn = card.querySelector(".card__delete-btn");
 
-    /**
-     * Проверка является ли пользователь владельцем карточки.
-     * @returns {boolean} - владелец если true.
-     * @private
-     */
-    _isCardOwner() {
-        return this._content.owner._id === this._userId;
-    }
+  deleteBtn.addEventListener("click", evt => {
+    addingClassToOpenPopup(deleteCardPopupElement);
+    handlerSubmitDeleteCard(evt.target.offsetParent);
+    showLoadingOnBtn("default", submitDeletingCardBtn);
+  });
+}
 
-    /**
-     * Проверка установки текущим пользователем лайка на карточке.
-     * @returns {boolean} - если текущий пользователь ставил лайк - true.
-     * @private
-     */
-    _hasUserLike() {
-        return this._content.likes.some(userData => {
-            return userData._id === this._userId;
-        });
-    }
+/**
+ * Функция позволяет повесить событие открытия попапа с картинкой на карточку.
+ * @param card {Element} - элемент карточки, на которую надо добавить событие.
+ */
+function addEventToOpenImagePopup(card) {
+  const imageCardElement = card.querySelector(".card__image");
+  const descriptionCardElement = card.querySelector(".card__description");
 
-    /**
-     * Отрисовка счетчика лайков.
-     * @param likesCounter {Element} - элемент счетчика лайков.
-     * @private
-     */
-    _updateLikesCounter(likesCounter) {
-        const nLikes = this._content.likes.length;
-        if (nLikes > 0) {
-            likesCounter.classList.add(this._selectors.likesCounterActive);
-            likesCounter.textContent = nLikes;
-        } else {
-            likesCounter.textContent = "";
-            likesCounter.classList.remove(this._selectors.likesCounterActive);
-        }
-    }
+  imageCardElement.addEventListener("click", () => {
+    imagePopupElement.src = imageCardElement.src;
+    imagePopupElement.alt = imageCardElement.alt;
+    descriptionPopupElement.textContent = descriptionCardElement.textContent;
+  });
 
-    /**
-     * Отрисовка кнопки удаления, если карточка принадлежит владельцу.
-     * @param deleteButton {Element} - элемент кнопки.
-     * @private
-     */
-    _updateDeleteButton(deleteButton) {
-        if (this._isCardOwner()) {
-            deleteButton.classList.add(this._selectors.deleteButtonActive);
-        }
-    }
+  imageCardElement.addEventListener("click", () => {
+    addingClassToOpenPopup(viewImagePopupElement);
+  });
+}
+
+/**
+ * Функция для отрисовки карточки в галерее.
+ * @param card {Object} - Объект с данными о карточке.
+ * @param id {String} - Id пользователя.
+ * @param card.link {String} - Поле со ссылкой на изображение.
+ * @param card.name {String} - Поле с описанием места.
+ * @param card.likes {Array} - Поле хранит массив лайков с информацией о том, кому понравилось.
+ */
+function createCardElement(card, id) {
+  const cardTemplate = document.querySelector("#card").content;
+  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+  const imageCardElement = cardElement.querySelector(".card__image");
+  const descriptionCardElement = cardElement.querySelector(".card__description");
+  const countOfLikes = cardElement.querySelector(".card__like-counter");
+  const deleteBtn = cardElement.querySelector(".card__delete-btn");
+  const isLikedByMe = card.likes.some(like => {
+    return like._id === id;
+  });
+  const likeBtn = cardElement.querySelector(".card__like-btn");
+
+  imageCardElement.src = card.link;
+  imageCardElement.alt = card.name;
+  descriptionCardElement.textContent = card.name;
+  countOfLikes.textContent = card.likes.length;
+  cardElement.setAttribute("data-id", card._id);
+
+  if (card.owner._id !== id) {
+    deleteBtn.remove();
+  } else {
+    addEventToDeleteCard(cardElement);
+  }
+
+  if (isLikedByMe) {
+    likeBtn.classList.add("card__like-btn_active");
+  }
+
+  addEventToLikeCard(cardElement);
+  addEventToOpenImagePopup(cardElement);
+
+  return cardElement;
+}
+
+/**
+ * Функция, выполняющая рендер галереи.
+ * @param data {Array} - массив с данными для карточек в галерее.
+ * @param data.createdAt {Data} - дата создания карточки.
+ * @param data.likes {Array} - массив лайков с информацией о том, кому понравилось.
+ * @param data.link {URL} - URL картинки места.
+ * @param data.name {Text} - название места.
+ * @param data.owner {Object} - владелец карточки.
+ * @param galleryElement {Object} - элемент галереи, в котором требуется выполнить рендер карточек.
+ * @param id {String} - ID пользователя.
+ * */
+export function renderGallery(data, galleryElement, id) {
+  if (data.length > 0) {
+    data.forEach(card => {
+      galleryElement.append(createCardElement(card, id));
+    });
+  }
+}
+
+/**
+ * Функция для срабатывания создания карточки по нажатию на кнопку добавления новой карточки.
+ */
+export function addNewCard(card, galleryElement, id) {
+    const newCardElement = createCardElement(card, id);
+
+  galleryElement.prepend(newCardElement);
 }

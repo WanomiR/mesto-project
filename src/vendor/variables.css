@@ -1,0 +1,16 @@
+:root {
+  /*colors*/
+  --background-color-main: rgba(0, 0, 0, 1);
+  --background-color-light: rgba(255, 255, 255, 1);
+  --background-color-overlay: rgba(0, 0, 0, .5);
+  --background-color-galery-overlay: rgba(0, 0, 0, .89);
+  --text-color-light: rgba(255, 255, 255, 1);
+  --text-color-dark: rgba(0, 0, 0, 1);
+  --text-color-medium: rgba(84, 84, 84, 1);
+  --text-color-error: rgba(255, 0, 0, 1);
+  --text-color-disabled: #D9D9D9;
+  --border-grey: rgba(84, 84, 84, 0.7);
+  --border-white: rgba(255, 255, 255, 1);
+  --border-black-opacity: rgba(0, 0, 0, .2);
+  --btn-color-dark: rgba(0, 0, 0, 1);
+}

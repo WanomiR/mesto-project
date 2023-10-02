@@ -1,0 +1,5 @@
+.popup__image-viewer {
+  padding-top: 81px;
+  justify-content: start;
+  background-color: var(--background-color-galery-overlay);
+}

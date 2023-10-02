@@ -1,6 +1,6 @@
-.DS_Store
-.vscdoe
-.idea
-
-node_modules
-dist
+./.idea
+/*.zip
+/*.fig
+./*.jpg
+./node_modules
+./dist/

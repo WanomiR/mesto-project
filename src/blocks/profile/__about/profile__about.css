@@ -1,0 +1,21 @@
+.profile__about {
+  padding: 0;
+  margin: 0;
+  max-width: 500px;
+  width: 100%;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-color-light);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 528px){
+  .profile__about {
+    text-align: end;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,25 @@
+.profile__container {
+  margin-top: 21px;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: grid;
+  grid-template-columns: minmax(auto, 355px) auto;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 18px;
+  row-gap: 10px;
+}
+
+@media screen and (max-width: 988px){
+  .profile__container {
+    grid-template-columns: minmax(auto, 326px) auto;
+  }
+}
+
+@media screen and (max-width: 528px){
+  .profile__container {
+    margin-top: 0;
+    grid-template-columns: 235px  auto;
+    column-gap: 10px;
+    row-gap: 0;
+  }
+}
