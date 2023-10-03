@@ -23,14 +23,14 @@ export function generateCard({Card, cardContent, cardSelectors, api, popupImage,
         handleDeleteCard: (card, cardId) => {
             handleDeleteCard(api, card, cardId);
         },
-        putLike: (cardId, buttonElement, likesCounter) => {
+        putLike: (cardId) => {
             api.putLike(cardId)
-                .then(res => card.updateLikeButton(buttonElement, likesCounter, res.likes))
+                .then(res => card.updateLikeButton(res.likes))
                 .catch(err => console.log(err));
         },
-        removeLike: (cardId, buttonElement, likesCounter) => {
+        removeLike: (cardId) => {
             api.deleteLike(cardId)
-                .then(res => card.updateLikeButton(buttonElement, likesCounter, res.likes))
+                .then(res => card.updateLikeButton(res.likes))
                 .catch(err => console.log(err));
         }
     })
