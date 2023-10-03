@@ -10,7 +10,6 @@ import {
     buttonEditProfile,
     buttonEditAvatar,
     cardsGrid,
-    profileForm,
     userName,
     userDescription
 } from "../components/constants"
@@ -29,45 +28,70 @@ import {generateCard} from "../components/utils";
 const api = new Api(apiConfig)
 const profile = new UserInfo(userSelectors)
 const popupImage = new PopupWithImage(".popup_type_image");
+const validators = {}
 
-const popupCard = new PopupWithForm(".popup_type_card", (data) => {
-    // submit form callback
-    popupCard.renderLoading(true)
-    api.postCard(data)
-        .then(cardContent => {
-            popupCard.close()
-            const cardElement = generateCard({
-                Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
+// ---------- Enable validation ---------- //
+
+Array.from(document.forms).forEach(formElement => {
+    validators[formElement.name] = new FormValidator(formSelectors, formElement);
+    validators[formElement.name].enableValidation();
+})
+
+const popupCard = new PopupWithForm({
+    selectorPopup: ".popup_type_card",
+    formSubmitCallback: (data) => {
+        // submit form callback
+        popupCard.renderLoading(true)
+        api.postCard(data)
+            .then(cardContent => {
+                popupCard.close()
+                const cardElement = generateCard({
+                    Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
+                })
+                cardsGrid.prepend(cardElement);
             })
-            cardsGrid.prepend(cardElement);
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-            popupCard.renderLoading(false)
-        })
-
+            .catch(err => console.log(err))
+            .finally(() => {
+                popupCard.renderLoading(false)
+            })
+    },
+    clearFieldsHandler: () => {
+        validators.card.hideAllInputErrors();
+    }
 });
 
-const popupProfile = new PopupWithForm(".popup_type_profile", (data) => {
-    popupProfile.renderLoading(true);
-    api.patchUserInfo(data)
-        .then(res => profile.setUserInfo(res.name, res.about))
-        .catch(err => console.log(err))
-        .finally(() => {
-            popupProfile.renderLoading(false);
-            popupProfile.close();
-        });
+const popupProfile = new PopupWithForm({
+    selectorPopup: ".popup_type_profile",
+    formSubmitCallback: (data) => {
+        popupProfile.renderLoading(true);
+        api.patchUserInfo(data)
+            .then(res => profile.setUserInfo(res.name, res.about))
+            .catch(err => console.log(err))
+            .finally(() => {
+                popupProfile.renderLoading(false);
+                popupProfile.close();
+            });
+    },
+    clearFieldsHandler: () => {
+        validators.userInfo.hideAllInputErrors();
+    }
 });
 
-const popupAvatar = new PopupWithForm(".popup_type_avatar", ({avatarLink}) => {
-    popupAvatar.renderLoading(true);
-    api.patchUserAvatar(avatarLink)
-        .then(res => profile.setUserAvatar(res.avatar))
-        .catch(err => console.log(err))
-        .finally(() => {
-            popupAvatar.renderLoading(false);
-            popupAvatar.close();
-        });
+const popupAvatar = new PopupWithForm({
+    selectorPopup: ".popup_type_avatar",
+    formSubmitCallback: ({avatarLink}) => {
+        popupAvatar.renderLoading(true);
+        api.patchUserAvatar(avatarLink)
+            .then(res => profile.setUserAvatar(res.avatar))
+            .catch(err => console.log(err))
+            .finally(() => {
+                popupAvatar.renderLoading(false);
+                popupAvatar.close();
+            });
+    },
+    clearFieldsHandler: () => {
+        validators.profileAvatar.hideAllInputErrors();
+    }
 });
 
 
@@ -86,19 +110,9 @@ buttonEditAvatar.addEventListener("click", () => {
 })
 buttonEditProfile.addEventListener("click", () => {
     const {name, about} = profile.getUserInfo();
-    const validator = new FormValidator(formSelectors, profileForm)
     userName.value = name;
     userDescription.value = about;
-    validator.enableValidation();
     popupProfile.open();
-})
-
-
-// ---------- Enable validation ---------- //
-
-Array.from(document.forms).forEach(formElement => {
-    const validator = new FormValidator(formSelectors, formElement);
-    validator.enableValidation();
 })
 
 

@@ -5,21 +5,23 @@ import Popup from "./Popup";
  */
 export default class PopupWithForm extends Popup {
     _formElement;
-    _handlerSubmitForm;
     _submitButton;
     _inputsList;
+    _handlerSubmitForm;
 
     /**
      * Создать попап.
      * @param selectorPopup {String} - селектор попапа.
      * @param formSubmitCallback {Function} - колбэк сабмита формы.
+     * @param clearFieldsHandler {Function} - очистка полей формы.
      */
-    constructor(selectorPopup, formSubmitCallback) {
+    constructor({selectorPopup, formSubmitCallback, clearFieldsHandler}) {
         super(selectorPopup);
-        this._handlerSubmitForm = formSubmitCallback;
         this._formElement = this._popupElement.querySelector("form");
         this._submitButton = this._popupElement.querySelector(".form__submit-button")
         this._inputsList = this._formElement.querySelectorAll(".form__input");
+        this._handlerSubmitForm = formSubmitCallback;
+        this.clearFieldsHandler = clearFieldsHandler;
     }
 
     /**
@@ -32,19 +34,7 @@ export default class PopupWithForm extends Popup {
         this._inputsList.forEach(input => inputValues[input.name] = input.value);
         return inputValues
     }
-    _clearErrorFields() {
-        const errorElements = Array.from(this._formElement.querySelectorAll(".form__input-error"));
-        const inputElements = Array.from(this._formElement.querySelectorAll(".form__input_type_error"));
 
-        errorElements.forEach(errorField => {
-            errorField.classList.remove("popup__input-error_visible");
-            errorField.textContent = "";
-        });
-
-        inputElements.forEach(input => {
-            input.classList.remove("form__input_type_error");
-        })
-    }
     /**
      * Закрытие попапа как в родителе, но с очищением полей.
      */
@@ -52,7 +42,7 @@ export default class PopupWithForm extends Popup {
         super.close();
         setTimeout(() => {
             this._formElement.reset();
-            this._clearErrorFields();
+            this.clearFieldsHandler();
         }, 1000);
     }
 
