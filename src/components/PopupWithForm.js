@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     _formElement;
     _handlerSubmitForm;
     _submitButton;
+    _inputsList;
 
     /**
      * Создать попап.
@@ -18,6 +19,7 @@ export default class PopupWithForm extends Popup {
         this._handlerSubmitForm = formSubmitCallback;
         this._formElement = this._popupElement.querySelector("form");
         this._submitButton = this._popupElement.querySelector(".form__submit-button")
+        this._inputsList = this._formElement.querySelectorAll(".form__input");
     }
 
     /**
@@ -26,9 +28,8 @@ export default class PopupWithForm extends Popup {
      * @private
      */
     _getInputValues() {
-        const inputsList = this._formElement.querySelectorAll(".form__input");
         const inputValues = {};
-        inputsList.forEach(input => inputValues[input.name] = input.value);
+        this._inputsList.forEach(input => inputValues[input.name] = input.value);
         return inputValues
     }
     _clearErrorFields() {
