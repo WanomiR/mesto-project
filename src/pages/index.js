@@ -10,7 +10,6 @@ import {
     buttonEditProfile,
     buttonEditAvatar,
     cardsGrid,
-    profileForm,
     userName,
     userDescription
 } from "../components/constants"
@@ -22,7 +21,6 @@ import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
 import {generateCard} from "../components/utils";
-import {data} from "autoprefixer";
 
 
 // ---------- Classes initialization ---------- //
