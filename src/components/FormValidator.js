@@ -44,7 +44,6 @@ export default class FormValidator {
      */
     hideAllInputErrors() {
         this._inputList.forEach(input => {
-            console.log(`hide ${input.name}`)
             this._hideInputError(input);
         })
     }
