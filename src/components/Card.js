@@ -87,7 +87,7 @@ export default class Card {
 
     /**
      * Установка слушателей на карточку.
-     * @param likeButton {Element} - кнопка лайка.
+     * @param likeButton {Object} - кнопка лайка.
      * @param likesCounter {Element} - счетчик лайков.
      * @param deleteButton {Element} - кнопка удаления карточки.
      * @param cardImage {Element} - изображение карточки.
