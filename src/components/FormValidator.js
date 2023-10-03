@@ -10,6 +10,8 @@ export default class FormValidator {
     constructor(formSelectors, formElement) {
         this._selectors = formSelectors;
         this._form = formElement;
+        this._inputList = Array.from(this._form.querySelectorAll(this._selectors.inputSelector));
+        this._buttonElement = this._form.querySelector(this._selectors.submitButtonSelector);
     }
 
     /**
@@ -88,29 +90,24 @@ export default class FormValidator {
 
     /**
      * Проверка и переключение состояния кнопки.
-     * @param inputList {Object} - список полей ввода формы.
-     * @param buttonElement {Object} - кнопка подтверждения формы.
      * @private
      */
-    _toggleButtonState (inputList, buttonElement) {
-        if (this._hasInvalidInput(inputList)) {
-            this._disableButton(buttonElement);
+    _toggleButtonState () {
+        if (this._hasInvalidInput(this._inputList)) {
+            this._disableButton(this._buttonElement);
         } else {
-            this._enableButton(buttonElement);
+            this._enableButton(this._buttonElement);
         }
     }
 
     enableValidation() {
-        const inputList = Array.from(this._form.querySelectorAll(this._selectors.inputSelector));
-        const buttonElement = this._form.querySelector(this._selectors.submitButtonSelector);
-
-        this._toggleButtonState(inputList, buttonElement);
-        inputList.forEach(inputElement => {
+        this._toggleButtonState();
+        this._inputList.forEach(inputElement => {
             this._hideInputError(inputElement);
 
             inputElement.addEventListener("input", () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState(inputList, buttonElement);
+                this._toggleButtonState();
             });
         });
     }
