@@ -101,7 +101,6 @@ export default class Card {
 
     /**
      * Отправка информации об установке или удалении лайка на карточке.
-     * @param evt {Object} - объект события слушателя.
      * @private
      */
     _handleLikeButton() {
