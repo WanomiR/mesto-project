@@ -70,6 +70,10 @@ export default class Card {
         this._updateLikesCounter();
     }
 
+    deleteCard() {
+        this._cardElement.remove();
+    }
+
     /**
      * Получить элемент карточки из шаблона.
      * @returns {Node} - готовая к обработке карточка.
@@ -136,7 +140,11 @@ export default class Card {
      * @private
      */
     _updateLikesCounter() {
-        this._likesCounter.classList.add(this._selectors.likesCounterActive);
+        if (this._content.likes.length > 0) {
+            this._likesCounter.classList.add(this._selectors.likesCounterActive);
+        } else {
+            this._likesCounter.classList.remove(this._selectors.likesCounterActive);
+        }
         this._likesCounter.textContent = this._content.likes.length;
     }
 

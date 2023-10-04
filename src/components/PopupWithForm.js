@@ -17,11 +17,11 @@ export default class PopupWithForm extends Popup {
      */
     constructor({selectorPopup, formSubmitCallback, clearFieldsHandler}) {
         super(selectorPopup);
-        this._formElement = this._popupElement.querySelector("form");
+        this._formElement = this._popupElement.querySelector(".form");
         this._submitButton = this._popupElement.querySelector(".form__submit-button")
         this._inputsList = this._formElement.querySelectorAll(".form__input");
         this._handlerSubmitForm = formSubmitCallback;
-        this.clearFieldsHandler = clearFieldsHandler;
+        this._clearFieldsHandler = clearFieldsHandler;
     }
 
     /**
@@ -42,8 +42,8 @@ export default class PopupWithForm extends Popup {
         super.close();
         setTimeout(() => {
             this._formElement.reset();
-            this.clearFieldsHandler();
-        }, 1000);
+            this._clearFieldsHandler();
+        }, 500);
     }
 
     /**
@@ -56,7 +56,6 @@ export default class PopupWithForm extends Popup {
             evt.preventDefault();
 
             this._handlerSubmitForm(this._getInputValues());
-            this.close();
         });
     }
 

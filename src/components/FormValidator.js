@@ -40,15 +40,6 @@ export default class FormValidator {
     }
 
     /**
-     * Скрытие всех полей с ошибками в форме по списку.
-     */
-    hideAllInputErrors() {
-        this._inputList.forEach(input => {
-            this._hideInputError(input);
-        })
-    }
-
-    /**
      * Проверка валидности введенного значения в поле и отрисовка ошибки.
      * @param inputElement {Object} - проверяемое поле ввода.
      * @private

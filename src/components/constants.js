@@ -38,7 +38,6 @@ const userSelectors = {
     avatarSelector: ".profile__avatar"
 };
 
-const cardsGrid = document.querySelector(".places__grid");
 const buttonAddCard = document.querySelector(".profile__add-button");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonEditAvatar = document.querySelector(".profile__edit-avatar-button");
@@ -51,7 +50,6 @@ export {
     formSelectors,
     cardSelectors,
     userSelectors,
-    cardsGrid,
     buttonAddCard,
     buttonEditProfile,
     buttonEditAvatar,

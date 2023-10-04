@@ -9,7 +9,6 @@ import {
     buttonAddCard,
     buttonEditProfile,
     buttonEditAvatar,
-    cardsGrid,
     userName,
     userDescription
 } from "../components/constants"
@@ -18,9 +17,20 @@ import Section from "../components/Section";
 import Card from "../components/Card";
 import PopupWithImage from "../components/PopupWithImage";
 import PopupWithForm from "../components/PopupWithForm";
+import PopupConfirm from "../components/PopupConfirm";
 import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
-import {generateCard} from "../components/utils";
+
+
+
+// ---------- Enable validation ---------- //
+
+const validators = {}
+
+Array.from(document.forms).forEach(formElement => {
+    validators[formElement.name] = new FormValidator(formSelectors, formElement);
+    validators[formElement.name].enableValidation();
+})
 
 
 // ---------- Classes initialization ---------- //
@@ -28,14 +38,43 @@ import {generateCard} from "../components/utils";
 const api = new Api(apiConfig)
 const profile = new UserInfo(userSelectors)
 const popupImage = new PopupWithImage(".popup_type_image");
-const validators = {}
 
-// ---------- Enable validation ---------- //
-
-Array.from(document.forms).forEach(formElement => {
-    validators[formElement.name] = new FormValidator(formSelectors, formElement);
-    validators[formElement.name].enableValidation();
+const popupConfirmDelete = new PopupConfirm({
+    selectorPopup: ".popup_type_confirm-delete",
+    formSubmitCallback: (cardElement, cardId, card) => {
+        api.deleteCard(cardId)
+            .then(res => {
+                card.deleteCard();
+                console.log(res.message);
+                popupConfirmDelete.close()
+            })
+            .catch(err => console.log(err));
+    }
 })
+
+function generateCard({Card, cardContent, cardSelectors, popupImage, userId}) {
+    const card = new Card({
+        cardContent, cardSelectors, api, userId,
+        handleOpenPopup: (placeName, imageLink) => {
+            popupImage.open(placeName, imageLink);
+        },
+        handleDeleteCard: (cardElement, cardId) => {
+            popupConfirmDelete.setEventListeners(cardElement, cardId, card);
+            popupConfirmDelete.open()
+        },
+        putLike: (cardId) => {
+            api.putLike(cardId)
+                .then(res => card.updateLikeButton(res.likes))
+                .catch(err => console.log(err));
+        },
+        removeLike: (cardId) => {
+            api.deleteLike(cardId)
+                .then(res => card.updateLikeButton(res.likes))
+                .catch(err => console.log(err));
+        }
+    })
+    return card.generate();
+}
 
 const popupCard = new PopupWithForm({
     selectorPopup: ".popup_type_card",
@@ -44,11 +83,16 @@ const popupCard = new PopupWithForm({
         popupCard.renderLoading(true)
         api.postCard(data)
             .then(cardContent => {
+                const cardList = new Section({ // render cards
+                    data: [cardContent], renderer: (cardContent) => {
+                        const cardElement = generateCard({
+                            Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
+                        })
+                        cardList.prependItem(cardElement);
+                    }
+                }, '.places__grid')
+                cardList.renderItems();
                 popupCard.close()
-                const cardElement = generateCard({
-                    Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
-                })
-                cardsGrid.prepend(cardElement);
             })
             .catch(err => console.log(err))
             .finally(() => {
@@ -56,7 +100,7 @@ const popupCard = new PopupWithForm({
             })
     },
     clearFieldsHandler: () => {
-        validators.card.hideAllInputErrors();
+        validators.card.enableValidation();
     }
 });
 
@@ -65,15 +109,17 @@ const popupProfile = new PopupWithForm({
     formSubmitCallback: (data) => {
         popupProfile.renderLoading(true);
         api.patchUserInfo(data)
-            .then(res => profile.setUserInfo(res.name, res.about))
+            .then(res => {
+                profile.setUserInfo(res.name, res.about)
+                popupProfile.close();
+            })
             .catch(err => console.log(err))
             .finally(() => {
                 popupProfile.renderLoading(false);
-                popupProfile.close();
             });
     },
     clearFieldsHandler: () => {
-        validators.userInfo.hideAllInputErrors();
+        validators.userInfo.enableValidation();
     }
 });
 
@@ -82,15 +128,17 @@ const popupAvatar = new PopupWithForm({
     formSubmitCallback: ({avatarLink}) => {
         popupAvatar.renderLoading(true);
         api.patchUserAvatar(avatarLink)
-            .then(res => profile.setUserAvatar(res.avatar))
+            .then(res => {
+                profile.setUserAvatar(res.avatar)
+                popupAvatar.close();
+            })
             .catch(err => console.log(err))
             .finally(() => {
                 popupAvatar.renderLoading(false);
-                popupAvatar.close();
             });
     },
     clearFieldsHandler: () => {
-        validators.profileAvatar.hideAllInputErrors();
+        validators.profileAvatar.enableValidation();
     }
 });
 
@@ -128,9 +176,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
                 const cardElement = generateCard({
                     Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
                 })
-                cardList.addItem(cardElement);
+                cardList.appendItem(cardElement);
             }
         }, '.places__grid')
+        cardList.clear();
         cardList.renderItems();
     })
     .catch(err => console.log(err))

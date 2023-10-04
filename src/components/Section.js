@@ -18,7 +18,11 @@ export default class Section {
      * Добавление элемента в контейнер.
      * @param element {Node} - отрисовываемый элемент.
      */
-    addItem(element) {
+    appendItem(element) {
+        this._container.append(element);
+    }
+
+    prependItem(element) {
         this._container.prepend(element);
     }
 
@@ -33,7 +37,6 @@ export default class Section {
      * Отрисовка элементов.
      */
     renderItems() {
-        this.clear();
         this._itemsToRender.forEach(item => {
             this._renderer(item);
         })
