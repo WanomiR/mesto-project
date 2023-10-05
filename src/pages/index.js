@@ -23,9 +23,13 @@ import UserInfo from "../components/UserInfo";
 
 
 
-// ---------- Enable validation ---------- //
+
+// ---------- Variables ---------- //
 
 const validators = {}
+let cardList;
+
+// ---------- Enable validation ---------- //
 
 Array.from(document.forms).forEach(formElement => {
     validators[formElement.name] = new FormValidator(formSelectors, formElement);
@@ -83,15 +87,10 @@ const popupCard = new PopupWithForm({
         popupCard.renderLoading(true)
         api.postCard(data)
             .then(cardContent => {
-                const cardList = new Section({ // render cards
-                    data: [cardContent], renderer: (cardContent) => {
-                        const cardElement = generateCard({
-                            Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
-                        })
-                        cardList.prependItem(cardElement);
-                    }
-                }, '.places__grid')
-                cardList.renderItems();
+                const cardElement = generateCard({
+                    Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
+                });
+                cardList.prependItem(cardElement);
                 popupCard.close()
             })
             .catch(err => console.log(err))
@@ -171,7 +170,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         const [userData, cards] = res;
         profile.loadProfileData(userData) // load profile data
         sessionStorage.setItem("id", userData._id)  // save current user id
-        const cardList = new Section({ // render cards
+        cardList = new Section({ // render cards
             data: cards, renderer: (cardContent) => {
                 const cardElement = generateCard({
                     Card, cardContent, cardSelectors, api, popupImage, userId: sessionStorage.getItem("id")
@@ -183,4 +182,3 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         cardList.renderItems();
     })
     .catch(err => console.log(err))
-
