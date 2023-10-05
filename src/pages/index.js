@@ -22,12 +22,11 @@ import FormValidator from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
 
 
-
-
 // ---------- Variables ---------- //
 
 const validators = {}
 let cardList;
+
 
 // ---------- Enable validation ---------- //
 
