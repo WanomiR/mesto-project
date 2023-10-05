@@ -1,19 +1,7 @@
 .card {
-  padding: 0;
-  margin: 0;
   width: 282px;
-  display: grid;
-  grid-template: 1fr min-content / 1fr 42px;
-  column-gap: 20px;
-  row-gap: 25px;
-  background-color: var(--background-color-light);
   border-radius: 10px;
+  background-color: #fff;
   overflow: hidden;
   position: relative;
-}
-
-@media screen and (max-width: 320px){
-  .card {
-    margin: 0 auto;
-  }
 }

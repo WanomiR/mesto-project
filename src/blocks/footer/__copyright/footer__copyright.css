@@ -1,18 +1,13 @@
 .footer__copyright {
+  color: #545454;
   font-size: 18px;
+  line-height: 22px;
   font-weight: 400;
-  color: var(--text-color-medium);
-  text-decoration: none;
-  transition: color .3s linear;
 }
 
-.footer__copyright:hover {
-  color: var(--text-color-light);
-}
-
-@media screen and (max-width: 320px){
+@media screen and (max-width: 650px) {
   .footer__copyright {
-    margin-left: 19px;
     font-size: 14px;
+    line-height: 17px;
   }
 }

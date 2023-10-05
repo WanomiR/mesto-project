@@ -1,0 +1,7 @@
+.form__field {
+    min-height: 70px;
+}
+
+.form__field:last-of-type {
+    margin-bottom: 10px;
+}

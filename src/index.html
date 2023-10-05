@@ -3,146 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mesto</title>
+  <title lang="en">Mesto</title>
 </head>
 <body class="page">
-<header class="header page__header">
-  <a href="#" class="logo">
-    <img src="<%=require('./images/logo.svg')%>" class="logo__image" alt="Mesto">
-  </a>
+<header class="header">
+  <img class="header__logo" src="<%=require('./images/mesto-logo.svg')%>" alt="логотип проекта Mesto">
 </header>
-<main class="main page__main">
-  <section class="profile main__profile">
-    <div class="profile__avatar-block">
-      <img src="<%=require('./images/avatar.jpg')%>" alt="Жак-Ив Кусто" class="profile__avatar">
-      <button class="profile__edit-avatar">Редактировать</button>
+<main class="content">
+  <section class="profile">
+    <div class="profile__avatar-container">
+      <button class="profile__edit-avatar-button" type="button" aria-label="Редактировать фотографию профиля"></button>
+      <img class="profile__avatar" src="" alt="аватар пользователя">
     </div>
-    <div class="profile__container">
-      <h1 class="profile__name">Жак-Ив Кусто</h1>
-      <p class="profile__about">Исследователь океана</p>
-      <button class="profile__edit-btn" type="button">Изменить</button>
-    </div>
-    <button class="profile__add-btn" type="button">Добавить</button>
+    <h1 class="profile__title"></h1>
+    <p class="profile__subtitle"></p>
+    <button class="profile__edit-button" type="button" aria-label="Редактировать данные профиля"></button>
+    <button class="profile__add-button" type="button" aria-label="Добавить карточку"></button>
   </section>
-
-  <section class="gallery main__gallery">
+  <section class="places">
+    <ul class="places__grid">
+    </ul>
   </section>
 </main>
-<footer class="footer page__footer">
-  <a href="#" class="footer__copyright">&copy; 2020 Mesto Russia</a>
+<footer class="footer">
+  <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
 </footer>
-
-<div class="popup" id="editProfilePopup">
+<div class="popup popup_type_profile">
   <div class="popup__container">
-    <form action="#" class="popup__form" name="edit_profile" novalidate>
-      <h2 class="popup__header">Редактировать профиль</h2>
-      <input type="text"
-             class="popup__input"
-             placeholder="Введите имя"
-             id="personName"
-             name="personName"
-             minlength="2"
-             maxlength="40"
-             pattern="^[а-яА-ЯёЁЁa-zA-Z \-]+"
-             data-error-message="Разрешены только латинские и кириллические буквы, а так же пробел и тире."
-             required>
-      <span class="popup__input-error personName-error"></span>
-      <input type="text"
-             class="popup__input"
-             placeholder="Введите род деятельности"
-             id="personAbout"
-             name="personAbout"
-             minlength="2"
-             maxlength="200"
-             pattern="^[а-яА-ЯёЁЁa-zA-Z \-]+"
-             data-error-message="Разрешены только латинские и кириллические буквы, а так же пробел и тире."
-             required>
-      <span
-        class="popup__input-error personAbout-error"></span>
-      <button type="submit" class="popup__submit-btn popup__submit-btn_disabled" id="personSubmitPopup" disabled>
-        Сохранить
-      </button>
+    <h2 class="popup__title" data-user-id="">Редактировать профиль</h2>
+    <form class="form form_type_profile" name="userInfo" novalidate>
+      <div class="form__field">
+        <input type="text" name="userName" placeholder="Имя" value="Жак-Ив Кусто" class="form__input"
+               minlength="2" maxlength="40" id="input-name" pattern="[a-zA-Zа-яА-Я\-\s]+"
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
+        <span class="input-name-error form__input-error"></span>
+      </div>
+      <div class="form__field">
+        <input type="text" name="userDescription" placeholder="Род деятельности" value="Исследователь океана"
+               class="form__input" minlength="2" maxlength="200" id="input-description" pattern="[a-zA-Zа-яА-Я\-\s]+"
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
+        <span class="input-description-error form__input-error"></span>
+      </div>
+      <button type="submit" name="submitButton" class="form__submit-button">Сохранить</button>
     </form>
-    <button type="button" class="popup__close-btn">Закрыть</button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
-
-<div class="popup" id="addCardPopup">
+<div class="popup popup_type_avatar">
   <div class="popup__container">
-    <form action="#" class="popup__form" name="add_place" novalidate>
-      <h2 class="popup__header">Новое место</h2>
-      <input type="text"
-             class="popup__input"
-             placeholder="Название"
-             id="placeName"
-             name="placeName"
-             required
-             minlength="2"
-             maxlength="30"
-             pattern="^[а-яА-ЯёЁЁa-zA-Z \-]+"
-             data-error-message="Разрешены только латинские и кириллические буквы, а так же пробел и тире.">
-      <span class="popup__input-error placeName-error"></span>
-      <input type="url"
-             class="popup__input"
-             placeholder="Ссылка на картинку"
-             id="placeURL"
-             name="palaceURL"
-             required>
-      <span class="popup__input-error placeURL-error"></span>
-      <button type="submit" class="popup__submit-btn popup__submit-btn_disabled" id="placeSubmitPopup" disabled>
-        Сохранить
-      </button>
+    <h2 class="popup__title">Обновить аватар</h2>
+    <form class="form form_type_avatar" name="profileAvatar" novalidate>
+      <div class="form__field">
+        <input type="url" name="avatarLink" placeholder="Ссылка на фото" class="form__input" id="avatar-link" required>
+        <span class="avatar-link-error form__input-error"></span>
+      </div>
+      <button type="submit" name="submitButton" class="form__submit-button">Сохранить</button>
     </form>
-    <button type="button" class="popup__close-btn">Закрыть</button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
-
-<div class="popup popup__image-viewer" id="imageViewerPopup">
+<div class="popup popup_type_card">
   <div class="popup__container">
-    <figure class="popup__image-block">
-      <img src="/images/item_1.jpg" alt="Карачаевск" class="popup__image">
-      <figcaption class="popup__image-description">Карачаевск</figcaption>
-    </figure>
-    <button type="button" class="popup__close-btn">Удалить</button>
-  </div>
-</div>
-
-<div class="popup" id="editAvatar">
-  <div class="popup__container">
-    <form action="#" class="popup__form" name="edit_avatar" novalidate>
-      <h2 class="popup__header">Обновить аватар</h2>
-      <input type="text" class="popup__input" placeholder="URL" id="avatarURL" name="placeName" required>
-      <span class="popup__input-error avatarURL-error"></span>
-      <button type="submit" class="popup__submit-btn popup__submit-btn_disabled" id="editAvatarSubmitPopup" disabled>
-        Сохранить
-      </button>
+    <h2 class="popup__title">Новое место</h2>
+    <form class="form form_type_card" name="card" novalidate>
+      <div class="form__field">
+        <input type="text" name="placeName" placeholder="Название" class="form__input"
+               id="input-place" minlength="2" maxlength="30" pattern="[a-zA-Zа-яА-Я\-\s]+"
+               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы." required>
+        <span class="input-place-error form__input-error"></span>
+      </div>
+      <div class="form__field">
+        <input type="url" name="imageLink" placeholder="Ссылка на картинку" class="form__input" id="input-link" required>
+        <span class="input-link-error form__input-error"></span>
+      </div>
+      <button type="submit" name="submitButton" class="form__submit-button">Создать</button>
     </form>
-    <button type="button" class="popup__close-btn">Закрыть</button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
-
-<div class="popup" id="confirmDeleteCard">
+<div class="popup popup_type_confirm-delete">
   <div class="popup__container">
-    <form action="#" class="popup__form" name="edit_avatar">
-      <h2 class="popup__header">Вы уверены?</h2>
-      <button type="submit" class="popup__submit-btn" id="deleteCardSubmitPopup">
-        Сохранить
-      </button>
+    <h2 class="popup__title">Вы уверены?</h2>
+    <form class="form form_type_confirm-delete" name="confirmDeletion" novalidate>
+      <button type="submit" name="confirmButton" class="form__submit-button">Да</button>
     </form>
-    <button type="button" class="popup__close-btn">Закрыть</button>
+    <button class="popup__close-button" type="button" aria-label="закрыть модальное окно"></button>
   </div>
 </div>
-
-<template id="card">
-  <div class="card">
-    <img src="images/item_1.jpg" alt="Карачаевск" class="card__image">
-    <h2 class="card__description">Карачаевск</h2>
-    <div class="card__like-block">
-      <button class="card__like-btn" type="button">Лайк</button>
-      <p class="card__like-counter"></p>
-    </div>
-    <button class="card__delete-btn" type="button">Удалить</button>
+<div class="popup popup_type_image">
+  <div class="popup__container_image">
+    <img class="popup__image" src="">
+    <p class="popup__title_image"></p>
+    <button class="popup__close-button" type="button"
+            aria-label="закрыть просмотровое окно"></button>
   </div>
+</div>
+<template class="card__template">
+  <li class="card">
+    <article>
+      <img class="card__image" src="" alt="">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <div class="card__like-container">
+          <button class="card__like-button" type="button" name="like" aria-label="кнопка «нравится»"></button>
+          <p class="card__like-counter"></p>
+        </div>
+        <button class="card__delete-button" type="button" name="delete" aria-label="кнопка «удалить»"></button>
+      </div>
+    </article>
+  </li>
 </template>
 </body>
 </html>

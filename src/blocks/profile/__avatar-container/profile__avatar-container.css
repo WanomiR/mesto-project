@@ -1,0 +1,12 @@
+.profile__avatar-container {
+    position: relative;
+    grid-area: profile-pic;
+    justify-self: flex-end;
+}
+
+
+@media screen and (max-width: 650px) {
+    .profile__avatar-container {
+        justify-self: center;
+    }
+}
