@@ -99,7 +99,7 @@ const popupCard = new PopupWithForm({
             })
     },
     clearFieldsHandler: () => {
-        validators.card.enableValidation();
+        validators.card.clearInputErrors();
     }
 });
 
@@ -118,7 +118,7 @@ const popupProfile = new PopupWithForm({
             });
     },
     clearFieldsHandler: () => {
-        validators.userInfo.enableValidation();
+        validators.userInfo.clearInputErrors();
     }
 });
 
@@ -137,7 +137,7 @@ const popupAvatar = new PopupWithForm({
             });
     },
     clearFieldsHandler: () => {
-        validators.profileAvatar.enableValidation();
+        validators.profileAvatar.clearInputErrors();
     }
 });
 

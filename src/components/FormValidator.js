@@ -111,4 +111,14 @@ export default class FormValidator {
             });
         });
     }
+
+    /**
+     * Скрытие всех полей с ошибками в форме по списку.
+     */
+    clearInputErrors() {
+        this._inputList.forEach(inputElement => {
+            this._hideInputError(inputElement)
+        })
+        this._toggleButtonState();
+    }
 }
