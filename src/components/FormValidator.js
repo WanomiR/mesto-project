@@ -60,32 +60,29 @@ export default class FormValidator {
 
     /**
      * Проверка формы на наличие хоть одного невалидного поля.
-     * @param inputList {Object} - список полей.
      * @returns {boolean} - true если есть хоть одно.
      * @private
      */
-    _hasInvalidInput(inputList) {
-        return inputList.some(inputElement => !inputElement.validity.valid);
+    _hasInvalidInput() {
+        return this._inputList.some(inputElement => !inputElement.validity.valid);
     }
 
     /**
      * Отключение кнопки подтверждения при невалидных полях.
-     * @param buttonElement {Object} - кнопка подтверждения формы.
      * @private
      */
-    _disableButton(buttonElement) {
-        buttonElement.classList.add(this._selectors.inactiveButtonClass);
-        buttonElement.setAttribute("disabled", true);
+    _disableButton() {
+        this._buttonElement.classList.add(this._selectors.inactiveButtonClass);
+        this._buttonElement.setAttribute("disabled", true);
     }
 
     /**
      * Включение кнопки подтверждения при валидных полях.
-     * @param buttonElement {Object} - кнопка подтверждения формы.
      * @private
      */
-    _enableButton(buttonElement) {
-        buttonElement.classList.remove(this._selectors.inactiveButtonClass);
-        buttonElement.removeAttribute("disabled");
+    _enableButton() {
+        this._buttonElement.classList.remove(this._selectors.inactiveButtonClass);
+        this._buttonElement.removeAttribute("disabled");
     }
 
     /**
@@ -93,10 +90,10 @@ export default class FormValidator {
      * @private
      */
     _toggleButtonState () {
-        if (this._hasInvalidInput(this._inputList)) {
-            this._disableButton(this._buttonElement);
+        if (this._hasInvalidInput()) {
+            this._disableButton();
         } else {
-            this._enableButton(this._buttonElement);
+            this._enableButton();
         }
     }
 
