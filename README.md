@@ -10,4 +10,4 @@ An interactive web page that allows you to add cards, put or delete likes, and c
 - Interactive elements' functionality, real-time form validation, and connection with the server are achieved with JavaScript.
 - Project assambly with [webpack](https://webpack.js.org/)
 
-This project is made in collaboration with Irina Naumova [github](https://github.com/AniraUoren)
+This project is made in collaboration with Irina Naumova [AniraUoren](https://github.com/AniraUoren)
